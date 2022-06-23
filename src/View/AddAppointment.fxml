@@ -35,5 +35,7 @@
       <TextField layoutX="202.0" layoutY="471.0" prefHeight="25.0" prefWidth="149.0" />
       <TextField layoutX="202.0" layoutY="513.0" />
       <Label layoutX="112.0" layoutY="517.0" text="User ID" />
+      <Button layoutX="358.0" layoutY="553.0" mnemonicParsing="false" text="Save" />
+      <Button layoutX="414.0" layoutY="553.0" mnemonicParsing="false" text="Cancel" />
    </children>
 </AnchorPane>
