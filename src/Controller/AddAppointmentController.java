@@ -19,17 +19,17 @@ import java.util.ResourceBundle;
 
 public class AddAppointmentController implements Initializable {
 
-    @FXML private TextField appointmentTitle;
+    @FXML private TextField apptTitleTextField;
     @FXML private ComboBox contactComboBox;
-    @FXML private TextField appointmentLoc;
-    @FXML private TextField appointmentDesc;
-    @FXML private TextField appointmentType;
+    @FXML private TextField apptLocTextField;
+    @FXML private TextField apptDescTextField;
+    @FXML private TextField apptTypeTextField;
     @FXML private DatePicker startDatePicker;
     @FXML private Spinner startTimeSpinner;
     @FXML private DatePicker endDatePicker;
     @FXML private Spinner endTimeSpinner;
-    @FXML private TextField customerId;
-    @FXML private TextField userId;
+    @FXML private TextField customerIdTextField;
+    @FXML private TextField userIdTextField;
 
     @FXML void saveButtonClicked(ActionEvent actionEvent) {
 
