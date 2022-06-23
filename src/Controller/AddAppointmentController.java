@@ -1,6 +1,7 @@
 package Controller;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -18,23 +19,23 @@ import java.util.ResourceBundle;
 
 public class AddAppointmentController implements Initializable {
 
-    private TextField appointmentTitle;
-    private ComboBox contactComboBox;
-    private TextField appointmentLoc;
-    private TextField appointmentDesc;
-    private TextField appointmentType;
-    private DatePicker startDatePicker;
-    private Spinner startTimeSpinner;
-    private DatePicker endDatePicker;
-    private Spinner endTimeSpinner;
-    private TextField customerId;
-    private TextField userId;
+    @FXML private TextField appointmentTitle;
+    @FXML private ComboBox contactComboBox;
+    @FXML private TextField appointmentLoc;
+    @FXML private TextField appointmentDesc;
+    @FXML private TextField appointmentType;
+    @FXML private DatePicker startDatePicker;
+    @FXML private Spinner startTimeSpinner;
+    @FXML private DatePicker endDatePicker;
+    @FXML private Spinner endTimeSpinner;
+    @FXML private TextField customerId;
+    @FXML private TextField userId;
 
-    void saveButtonClicked(ActionEvent actionEvent) {
+    @FXML void saveButtonClicked(ActionEvent actionEvent) {
 
     }
 
-    void cancelButtonClicked(ActionEvent actionEvent) throws IOException {
+    @FXML void cancelButtonClicked(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/MainScreen.fxml"));
         Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);

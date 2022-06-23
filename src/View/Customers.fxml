@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CustomersController">
+   <children>
+      <Label layoutX="33.0" layoutY="36.0" text="Customers">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Label>
+      <TableView layoutX="33.0" layoutY="125.0" prefHeight="421.0" prefWidth="1039.0">
+        <columns>
+          <TableColumn prefWidth="185.0" text="Name" />
+          <TableColumn prefWidth="398.0" text="Address" />
+            <TableColumn prefWidth="106.0" text="Postal Code" />
+            <TableColumn prefWidth="165.0" text="Phone Number" />
+            <TableColumn prefWidth="184.0" text="Division" />
+        </columns>
+      </TableView>
+      <Button layoutX="929.0" layoutY="62.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="143.0" style="-fx-background-color: #29b6f6;" text="+Add New" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Button layoutX="609.0" layoutY="39.0" mnemonicParsing="false" text="Modify Customer" />
+      <Button layoutX="619.0" layoutY="49.0" mnemonicParsing="false" text="Modify Customer" />
+   </children>
+</AnchorPane>
