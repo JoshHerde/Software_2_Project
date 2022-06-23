@@ -34,7 +34,7 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </RadioButton>
-      <Button layoutX="929.0" layoutY="62.0" mnemonicParsing="false" onAction="#newAppointmentClicked" prefHeight="25.0" prefWidth="143.0" style="-fx-background-color: #29b6f6;" text="+Add New" textFill="WHITE">
+      <Button layoutX="929.0" layoutY="62.0" mnemonicParsing="false" onAction="#newAppointmentClicked" prefHeight="25.0" prefWidth="143.0" style="-fx-background-color: #29b6f6; -fx-border-color: black;" text="+Add New" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
@@ -43,5 +43,10 @@
       <Button layoutX="744.0" layoutY="84.0" mnemonicParsing="false" onAction="#deleteAppointmentClicked" prefHeight="25.0" prefWidth="143.0" text="Delete Appointment" />
       <TextField fx:id="searchTextField" layoutX="33.0" layoutY="84.0" prefHeight="25.0" prefWidth="456.0" promptText="Search..." />
       <Button layoutX="1019.0" layoutY="561.0" mnemonicParsing="false" onAction="#exitButtonClicked" prefHeight="25.0" prefWidth="53.0" text="Exit" />
+      <Button layoutX="33.0" layoutY="558.0" mnemonicParsing="false" onAction="#customerButtonClicked" prefHeight="25.0" prefWidth="143.0" style="-fx-background-color: #b7ffbf; -fx-border-color: black;" text="Customers">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

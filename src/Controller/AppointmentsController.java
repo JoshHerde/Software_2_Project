@@ -39,4 +39,7 @@ public class AppointmentsController {
 
     public void exitButtonClicked(ActionEvent actionEvent) {
     }
+
+    public void customerButtonClicked(ActionEvent actionEvent) {
+    }
 }
