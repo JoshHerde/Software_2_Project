@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Locale;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -31,6 +32,20 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         userZoneId.setText(Locale.getDefault().getDisplayCountry());
+
+        try {
+            rb = ResourceBundle.getBundle("src/rb", Locale.getDefault());
+            if (Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en")) {
+                headerLabel.setText(rb.getString("Login"));
+                usernameTextField.setText(rb.getString("Username"));
+                passwordTextField.setText(rb.getString("Password"));
+                loginButton.setText(rb.getString("Login"));
+                locationLabel.setText(rb.getString("Location"));
+            }
+        }
+        catch (MissingResourceException e) {
+            System.out.println(e.getMessage());
+        }
 
 
 
