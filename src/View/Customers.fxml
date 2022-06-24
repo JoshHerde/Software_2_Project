@@ -23,7 +23,7 @@
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>
-      <Button layoutX="744.0" layoutY="45.0" mnemonicParsing="false" onAction="#modifyCustomerClicked" prefHeight="25.0" prefWidth="143.0" text="Modify Customer" />
+      <Button layoutX="744.0" layoutY="45.0" mnemonicParsing="false" onAction="#editCustomerClicked" prefHeight="25.0" prefWidth="143.0" text="Edit Customer" />
       <Button layoutX="744.0" layoutY="84.0" mnemonicParsing="false" onAction="#deleteCustomerClicked" prefHeight="25.0" prefWidth="143.0" text="Delete Customer" />
       <TextField fx:id="searchTextField" layoutX="33.0" layoutY="84.0" prefHeight="25.0" prefWidth="456.0" promptText="Search..." />
       <Button layoutX="1019.0" layoutY="561.0" mnemonicParsing="false" onAction="#backButtonClicked" prefHeight="25.0" prefWidth="53.0" text="Back" />

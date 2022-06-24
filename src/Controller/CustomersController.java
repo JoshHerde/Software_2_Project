@@ -27,7 +27,7 @@ public class CustomersController {
     @FXML  void newCustomerClicked(ActionEvent actionEvent) {
     }
 
-    @FXML  void modifyCustomerClicked(ActionEvent actionEvent) {
+    @FXML  void editCustomerClicked(ActionEvent actionEvent) {
     }
 
     @FXML void deleteCustomerClicked(ActionEvent actionEvent) {

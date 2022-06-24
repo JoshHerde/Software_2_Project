@@ -48,7 +48,7 @@ public class AppointmentsController implements Initializable {
         stage.show();
     }
 
-    @FXML void modifyAppointmentClicked(ActionEvent actionEvent) {
+    @FXML void editAppointmentClicked(ActionEvent actionEvent) {
     }
 
     @FXML void deleteAppointmentClicked(ActionEvent actionEvent) {
