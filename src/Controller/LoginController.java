@@ -23,6 +23,7 @@ public class LoginController implements Initializable {
     @FXML private Label locationLabel;
     @FXML private Label userZoneId;
     @FXML private Button loginButton;
+    @FXML private Label errorMessageLabel;
 
     @FXML void loginButtonClicked(ActionEvent actionEvent) throws IOException, SQLException {
 
@@ -35,12 +36,12 @@ public class LoginController implements Initializable {
 
         try {
             rb = ResourceBundle.getBundle("src/rb", Locale.getDefault());
-            if (Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en")) {
+            if (Locale.getDefault().getLanguage().equals("fr")) {
                 headerLabel.setText(rb.getString("Login"));
                 usernameTextField.setText(rb.getString("Username"));
                 passwordTextField.setText(rb.getString("Password"));
                 loginButton.setText(rb.getString("Login"));
-                locationLabel.setText(rb.getString("Location"));
+                locationLabel.setText(rb.getString("Location :"));
             }
         }
         catch (MissingResourceException e) {
