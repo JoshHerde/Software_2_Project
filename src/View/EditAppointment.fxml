@@ -22,7 +22,7 @@
       <Label layoutX="249.0" layoutY="423.0" text="End Time" />
       <Label layoutX="109.0" layoutY="475.0" text="Customer ID" />
       <Label layoutX="109.0" layoutY="517.0" text="User ID" />
-      <TextField fx:id="apptIdTextField" layoutX="206.0" layoutY="127.0" />
+      <TextField fx:id="apptIdTextField" editable="false" layoutX="206.0" layoutY="127.0" />
       <TextField fx:id="apptTitleTextField" layoutX="126.0" layoutY="166.0" prefWidth="340.0" />
       <TextField fx:id="apptDescTextField" layoutX="126.0" layoutY="210.0" prefWidth="340.0" />
       <TextField fx:id="apptLocTextField" layoutX="126.0" layoutY="256.0" prefWidth="340.0" />

@@ -24,10 +24,20 @@ public class CustomersController {
     @FXML private TableColumn customerDivisionCol;
     @FXML private TextField searchTextField;
 
-    @FXML  void newCustomerClicked(ActionEvent actionEvent) {
+    @FXML  void newCustomerClicked(ActionEvent actionEvent) throws IOException{
+        Parent root = FXMLLoader.load(getClass().getResource("/View/AddCustomer.fxml"));
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
-    @FXML  void editCustomerClicked(ActionEvent actionEvent) {
+    @FXML  void editCustomerClicked(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/View/EditCustomer.fxml"));
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML void deleteCustomerClicked(ActionEvent actionEvent) {

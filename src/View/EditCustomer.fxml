@@ -18,7 +18,7 @@
       <Label layoutX="42.0" layoutY="304.0" text="Phone Number" />
       <Label layoutX="42.0" layoutY="341.0" text="Country" />
       <Label layoutX="42.0" layoutY="380.0" text="Division" />
-      <TextField editable="false" layoutX="206.0" layoutY="127.0" promptText="Auto Gen - Disabled" />
+      <TextField editable="false" layoutX="206.0" layoutY="127.0" />
       <TextField fx:id="nameTextField" layoutX="126.0" layoutY="166.0" prefWidth="340.0" />
       <TextField fx:id="addressTextField" layoutX="126.0" layoutY="210.0" prefWidth="340.0" />
       <TextField fx:id="postalCodeTextField" layoutX="126.0" layoutY="256.0" prefWidth="340.0" />

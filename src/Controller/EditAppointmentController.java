@@ -1,28 +1,50 @@
 package Controller;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
-public class EditAppointmentController {
-    public TextField apptIdTextField;
-    public TextField apptTitleTextField;
-    public TextField apptDescTextField;
-    public TextField apptLocTextField;
-    public ComboBox contactComboBox;
-    public TextField apptTypeTextField;
-    public DatePicker startDatePicker;
-    public Spinner startTimeSpinner;
-    public DatePicker endDatePicker;
-    public Spinner endTimeSpinner;
-    public TextField customerIdTextField;
-    public TextField userIdTextField;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-    public void cancelButtonClicked(ActionEvent actionEvent) {
+public class EditAppointmentController implements Initializable {
+
+    @FXML private TextField apptIdTextField;
+    @FXML private  TextField apptTitleTextField;
+    @FXML private  TextField apptDescTextField;
+    @FXML private  TextField apptLocTextField;
+    @FXML private  ComboBox contactComboBox;
+    @FXML private  TextField apptTypeTextField;
+    @FXML private  DatePicker startDatePicker;
+    @FXML private  Spinner startTimeSpinner;
+    @FXML private  DatePicker endDatePicker;
+    @FXML private  Spinner endTimeSpinner;
+    @FXML private  TextField customerIdTextField;
+    @FXML private  TextField userIdTextField;
+
+    @FXML void cancelButtonClicked(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/View/Appointments.fxml"));
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
-    public void saveButtonClicked(ActionEvent actionEvent) {
+    @FXML void saveButtonClicked(ActionEvent actionEvent) {
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
     }
 }

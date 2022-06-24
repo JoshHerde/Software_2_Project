@@ -1,5 +1,6 @@
 package Controller;
 
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,6 +35,10 @@ public class AppointmentsController implements Initializable {
     @FXML private  RadioButton weekRadioButton;
     @FXML private  TextField searchTextField;
 
+
+    @FXML void allRbClicked(ActionEvent actionEvent) {
+    }
+
     @FXML void monthRbClicked(ActionEvent actionEvent) {
     }
 
@@ -48,7 +53,12 @@ public class AppointmentsController implements Initializable {
         stage.show();
     }
 
-    @FXML void editAppointmentClicked(ActionEvent actionEvent) {
+    @FXML void editAppointmentClicked(ActionEvent actionEvent) throws IOException{
+        Parent root = FXMLLoader.load(getClass().getResource("/View/EditAppointment.fxml"));
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML void deleteAppointmentClicked(ActionEvent actionEvent) {
@@ -70,4 +80,6 @@ public class AppointmentsController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
+
+
 }
