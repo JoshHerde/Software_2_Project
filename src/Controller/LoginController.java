@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -19,16 +20,18 @@ public class LoginController implements Initializable {
     @FXML private TextField usernameTextField;
     @FXML private PasswordField passwordTextField;
     @FXML private Label locationLabel;
-    @FXML private Label userLocationLabel;
+    @FXML private Label userZoneId;
     @FXML private Button loginButton;
 
-    @FXML void loginButtonClicked(ActionEvent actionEvent) throws ClassNotFoundException, IOException {
+    @FXML void loginButtonClicked(ActionEvent actionEvent) throws IOException, SQLException {
+
 
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        userLocationLabel.setText(Locale.getDefault().getDisplayCountry());
+        userZoneId.setText(Locale.getDefault().getDisplayCountry());
+
 
 
 

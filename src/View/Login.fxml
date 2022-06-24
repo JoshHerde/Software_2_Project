@@ -23,6 +23,6 @@
          </font>
       </PasswordField>
       <Label fx:id="locationLabel" layoutX="14.0" layoutY="269.0" text="Location :" />
-      <Label fx:id="userLocationLabel" layoutX="73.0" layoutY="269.0" prefHeight="17.0" prefWidth="110.0" />
+      <Label fx:id="userZoneId" layoutX="73.0" layoutY="269.0" prefHeight="17.0" prefWidth="110.0" />
    </children>
 </AnchorPane>
