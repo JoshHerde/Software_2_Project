@@ -6,7 +6,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 
-public class ModifyAppointmentController {
+public class EditAppointmentController {
     public TextField apptIdTextField;
     public TextField apptTitleTextField;
     public TextField apptDescTextField;

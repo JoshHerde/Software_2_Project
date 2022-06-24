@@ -4,9 +4,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ModifyAppointmentController">
+<AnchorPane prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.EditAppointmentController">
    <children>
-      <Label layoutX="101.0" layoutY="42.0" text="Modify Appointment">
+      <Label layoutX="124.0" layoutY="42.0" text="Edit Appointment">
          <font>
             <Font name="System Bold" size="30.0" />
          </font></Label>
