@@ -20,6 +20,7 @@ import java.util.ResourceBundle;
 
 public class AppointmentsController implements Initializable {
 
+
     @FXML private TableView appointmentsTable;
     @FXML private TableColumn idCol;
     @FXML private TableColumn titleCol;
@@ -31,6 +32,7 @@ public class AppointmentsController implements Initializable {
     @FXML private TableColumn endCol;
     @FXML private TableColumn customerIdCol;
     @FXML private TableColumn userIdCol;
+    @FXML private RadioButton allRadioButton;
     @FXML private  RadioButton monthRadioButton;
     @FXML private  RadioButton weekRadioButton;
     @FXML private  TextField searchTextField;

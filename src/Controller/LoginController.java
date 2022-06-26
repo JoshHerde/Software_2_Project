@@ -26,6 +26,8 @@ public class LoginController implements Initializable {
     @FXML private Label errorMessageLabel;
 
     @FXML void loginButtonClicked(ActionEvent actionEvent) throws IOException, SQLException {
+        String userName = usernameTextField.getText();
+        String password = passwordTextField.getText();
 
 
     }

@@ -29,6 +29,10 @@ public abstract class DBConnection {
         }
     }
 
+    public static Connection getConnection() {
+        return connection;
+    }
+
     public static void closeConnection() {
         try {
             connection.close();
