@@ -11,6 +11,10 @@ public class Appointments {
     private String type;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+    private String createDate;
+    private String createdBy;
+    private String lastUpdated;
+    private String lastUpdatedBy;
     private int customerID;
     private int userID;
 
