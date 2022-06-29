@@ -21,6 +21,10 @@ public class Users {
         this.lastUpdatedBy = lastUpdatedBy;
     }
 
+    public Users() {
+
+    }
+
 
     public int getUserID() {
         return userID;

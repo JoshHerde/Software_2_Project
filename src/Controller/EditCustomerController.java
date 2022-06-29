@@ -1,5 +1,7 @@
 package Controller;
 
+import Model.Countries;
+import Model.FirstLevelDivisions;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,8 +20,8 @@ public class EditCustomerController {
     @FXML private  TextField addressTextField;
     @FXML private  TextField postalCodeTextField;
     @FXML private  TextField phoneTextField;
-    @FXML private  ComboBox countryComboBox;
-    @FXML private  ComboBox divisionComboBox;
+    @FXML private  ComboBox<Countries> countryComboBox;
+    @FXML private  ComboBox<FirstLevelDivisions> divisionComboBox;
 
     @FXML void saveButtonClicked(ActionEvent actionEvent) {
     }

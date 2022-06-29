@@ -3,19 +3,18 @@ package Utilities;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class DBQuery {
 
-    private static PreparedStatement statement;
+    private static PreparedStatement ps;
 
-    public static void setPreparedStatement(Connection connection, String sqlStatement) throws SQLException {
+    public static void setPreparedStatement(Connection connection, String sql) throws SQLException {
 
-        statement = connection.prepareStatement(sqlStatement);
+        ps = connection.prepareStatement(sql);
     }
 
     public static PreparedStatement getPreparedStatement() {
 
-        return statement;
+        return ps;
     }
 }

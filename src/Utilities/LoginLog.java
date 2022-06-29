@@ -19,6 +19,7 @@ public class LoginLog {
         try {
             FileWriter fw = new FileWriter("login_activity.txt", true);
             PrintWriter pw = new PrintWriter(fw);
+            // pw.println(ZonedDateTime.now() + " " + username + (successful ? " Successfully logged in." : " was denied access"));
         } catch (IOException e) {
             e.printStackTrace();
         }

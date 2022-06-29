@@ -1,15 +1,17 @@
 package DAO_DBAccess;
 
-import Model.Countries;
 import Model.Users;
 import Utilities.DBConnection;
 import Utilities.DBQuery;
+import Utilities.LoginLog;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.IOException;
 import java.sql.*;
 
 public class UsersDAO {
+
 
     public static ObservableList<Users> getAllUsers() {
 
@@ -38,27 +40,29 @@ public class UsersDAO {
         return usersList;
     }
 
-    public static Users currentUser(Users user){
-        String getStatement = "Select User_ID,User_Name,Password from users where lower(User_Name) = ? and lower(Password) = ?;";
+    public static boolean checkForUser(String username, String password) {
+
+        Users user = new Users();
 
         try {
-            DBQuery.setPreparedStatement(DBConnection.getConnection(),getStatement);
-            PreparedStatement ps = DBQuery.getPreparedStatement();
-            ps.setString(1, user.getUserName().toLowerCase());
-            ps.setString(2, user.getPassword().toLowerCase());
-            ps.execute();
+            String sql = "SELECT * FROM users WHERE User_Name = ? AND Password = ?";
+            PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
             ResultSet rs = ps.getResultSet();
-            if (rs.next()){
-                return new Users(rs.getInt("User_ID"), rs.getString("User_Name"), rs.getString("Password"));
+
+            if (rs.next()) {
+                user.setUserName(rs.getString("User_Name"));
+                user.setPassword(rs.getString("Password"));
+                LoginLog.inputLog(username);
+                return true;
             }
-
-
-        }catch (SQLException sqlException){
-            sqlException.printStackTrace();
-
+            else {
+                LoginLog.inputLog(username);
+                return false;
+            }
         }
-        return null;
+        catch (SQLException | IOException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
     }
-
-
 }

@@ -2,6 +2,7 @@ package Controller;
 
 import DAO_DBAccess.CountriesDAO;
 import Model.Countries;
+import Model.FirstLevelDivisions;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,8 +16,9 @@ public class AddCustomerController {
     @FXML private  TextField addressTextField;
     @FXML private  TextField postalCodeTextField;
     @FXML private  TextField phoneTextField;
-    @FXML private  ComboBox countryComboBox;
-    @FXML private  ComboBox divisionComboBox;
+    @FXML private  ComboBox<Countries> countryComboBox;
+    @FXML private  ComboBox<FirstLevelDivisions> divisionComboBox;
+
 
     private ObservableList<Countries> countryList = FXCollections.observableArrayList();
 

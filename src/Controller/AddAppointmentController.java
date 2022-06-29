@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Contacts;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +21,7 @@ import java.util.ResourceBundle;
 public class AddAppointmentController implements Initializable {
 
     @FXML private TextField apptTitleTextField;
-    @FXML private ComboBox contactComboBox;
+    @FXML private ComboBox<Contacts> contactComboBox;
     @FXML private TextField apptLocTextField;
     @FXML private TextField apptDescTextField;
     @FXML private TextField apptTypeTextField;

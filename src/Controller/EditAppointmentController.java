@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Contacts;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,7 +24,7 @@ public class EditAppointmentController implements Initializable {
     @FXML private  TextField apptTitleTextField;
     @FXML private  TextField apptDescTextField;
     @FXML private  TextField apptLocTextField;
-    @FXML private  ComboBox contactComboBox;
+    @FXML private  ComboBox<Contacts> contactComboBox;
     @FXML private  TextField apptTypeTextField;
     @FXML private  DatePicker startDatePicker;
     @FXML private  Spinner startTimeSpinner;
