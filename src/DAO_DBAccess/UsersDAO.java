@@ -2,15 +2,19 @@ package DAO_DBAccess;
 
 import Model.Users;
 import Utilities.DBConnection;
-import Utilities.DBQuery;
 import Utilities.LoginLog;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.io.IOException;
 import java.sql.*;
 
 public class UsersDAO {
+
+    public static Users currentUser;
+
+    public static Users getCurrentUser() {
+        return currentUser;
+    }
 
 
     public static ObservableList<Users> getAllUsers() {
@@ -26,11 +30,7 @@ public class UsersDAO {
                 int userID = rs.getInt("User_ID");
                 String userName = rs.getString("User_Name");
                 String password = rs.getString("Password");
-                Timestamp createdDate = rs.getTimestamp("Create_Date");
-                String createdBy = rs.getString("Created_By");
-                Timestamp lastUpdated = rs.getTimestamp("Last_Updated");
-                String lastUpdatedBy = rs.getString("Last_Updated_By");
-                Users u = new Users(userName, password, createdDate, createdBy, lastUpdated, lastUpdatedBy);
+                Users u = new Users(userID, userName, password);
                 usersList.add(u);
             }
 
@@ -40,27 +40,31 @@ public class UsersDAO {
         return usersList;
     }
 
-    public static boolean checkForUser(String username, String password) {
-
-        Users user = new Users();
+    public static boolean checkForUser(String username, String password) throws SQLException {
 
         try {
             String sql = "SELECT * FROM users WHERE User_Name = ? AND Password = ?";
             PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+
+            ps.setString(1, username);
+            ps.setString(2, password);
+
+            ps.execute();
             ResultSet rs = ps.getResultSet();
 
             if (rs.next()) {
-                user.setUserName(rs.getString("User_Name"));
-                user.setPassword(rs.getString("Password"));
-                LoginLog.inputLog(username);
+                currentUser = new Users();
+                currentUser.setUserName(rs.getString("User_Name"));
+                currentUser.setPassword(rs.getString("Password"));
+                LoginLog.inputLog(username, true);
                 return true;
             }
             else {
-                LoginLog.inputLog(username);
+                LoginLog.inputLog(username, false);
                 return false;
             }
         }
-        catch (SQLException | IOException throwables) {
+        catch (SQLException throwables) {
             throwables.printStackTrace();
             return false;
         }

@@ -8,24 +8,15 @@ public class Customers {
     private int customerID;
     private String name;
     private String address;
-    private int postalCode;
+    private String postalCode; // change to string
     private String phone;
-    private Timestamp createDate;
-    private String createdBy;
-    private Timestamp lastUpdated;
-    private String lastUpdatedBy;
     private int divisionID;
 
-    public Customers(String name, String address, int postalCode, String phone, Timestamp createDate, String createdBy, Timestamp lastUpdated,
-                     String lastUpdatedBy, int divisionID) {
+    public Customers(String name, String address, String postalCode, String phone, int divisionID) {
         this.name = name;
         this.address = address;
         this.postalCode = postalCode;
         this.phone = phone;
-        this.createDate = createDate;
-        this.createdBy = createdBy;
-        this.lastUpdated = lastUpdated;
-        this.lastUpdatedBy = lastUpdatedBy;
         this.divisionID = divisionID;
     }
 
@@ -56,11 +47,11 @@ public class Customers {
     }
 
 
-    public int getPostalCode() {
+    public String getPostalCode() {
         return postalCode;
     }
 
-    public void setPostalCode(int postalCode) {
+    public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
     }
 
@@ -73,41 +64,6 @@ public class Customers {
         this.phone = phone;
     }
 
-
-    public Timestamp getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Timestamp createDate) {
-        this.createDate = createDate;
-    }
-
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-
-    public Timestamp getLastUpdated() {
-        return lastUpdated;
-    }
-
-    public void setLastUpdated(Timestamp lastUpdated) {
-        this. lastUpdated = lastUpdated;
-    }
-
-
-    public String getLastUpdatedBy() {
-        return lastUpdatedBy;
-    }
-
-    public void setLastUpdatedBy(String lastUpdatedBy) {
-        this.lastUpdatedBy = lastUpdatedBy;
-    }
 
 
     public int getDivisionID() {
