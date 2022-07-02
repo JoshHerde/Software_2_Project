@@ -30,6 +30,10 @@ public class Appointments {
         this.contactID = contactID;
     }
 
+    public Appointments() {
+
+    }
+
     public int getAppointmentID() {
         return appointmentID;
     }

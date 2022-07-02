@@ -18,24 +18,27 @@ public class CustomersDAO {
         ObservableList<Customers> customersList = FXCollections.observableArrayList();
 
         try {
-            String sql = "SELECT * from customers";
+            String sql = "SELECT * from customers AS c INNER JOIN first_level_divisions AS d ON c.Division_ID = d.Division_ID INNER JOIN countries AS co ON co.country_ID = d.Country_ID ";
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
-            ResultSet rs = ps.getResultSet();
+            ResultSet rs = ps.executeQuery();
 
             while(rs.next()) {
-                int customerID = rs.getInt("Customer_ID");
-                String name = rs.getString("Customer_Name");
-                String address = rs.getString("Address");
-                String postalCode = rs.getString("Postal_Code");
-                String phone = rs.getString("Phone");
-                int divisionID = rs.getInt("Division_ID");
-                Customers customer = new Customers(name, address, postalCode, phone, divisionID);
-                customersList.add(customer);
+                Customers customers = new Customers(
+                    rs.getInt("Customer_ID"),
+                    rs.getString("Customer_Name"),
+                    rs.getString("Address"),
+                    rs.getString("Postal_Code"),
+                    rs.getString("Phone"),
+                    rs.getInt("Division_ID")
+                );
+                customersList.add(customers);
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            return customersList;
         }
-        return customersList;
+        catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 
 
@@ -68,11 +71,4 @@ public class CustomersDAO {
         ps.execute();
 
     }
-
-
-
-
-
-
-
 }

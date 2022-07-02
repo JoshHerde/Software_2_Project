@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class EditAppointmentController implements Initializable {
@@ -42,6 +43,15 @@ public class EditAppointmentController implements Initializable {
     }
 
     @FXML void saveButtonClicked(ActionEvent actionEvent) {
+        String title = apptTitleTextField.getText();
+        String description = apptDescTextField.getText();
+        String location = apptLocTextField.getText();
+        String type = apptTypeTextField.getText();
+        LocalDateTime startTime;
+        LocalDateTime endTime;
+        int customerID;
+        int userID;
+        int contactID;
     }
 
     @Override

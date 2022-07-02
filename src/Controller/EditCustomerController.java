@@ -1,7 +1,7 @@
 package Controller;
 
 import Model.Countries;
-import Model.FirstLevelDivisions;
+import Model.Divisions;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,13 +21,13 @@ public class EditCustomerController {
     @FXML private  TextField postalCodeTextField;
     @FXML private  TextField phoneTextField;
     @FXML private  ComboBox<Countries> countryComboBox;
-    @FXML private  ComboBox<FirstLevelDivisions> divisionComboBox;
+    @FXML private  ComboBox<Divisions> divisionComboBox;
 
     @FXML void saveButtonClicked(ActionEvent actionEvent) {
     }
 
     @FXML void cancelButtonClicked(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/View/Appointments.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/View/Customers.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);

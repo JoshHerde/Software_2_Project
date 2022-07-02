@@ -12,13 +12,15 @@ public class Customers {
     private String phone;
     private int divisionID;
 
-    public Customers(String name, String address, String postalCode, String phone, int divisionID) {
+    public Customers(int customerID, String name, String address, String postalCode, String phone, int divisionID) {
+        this.customerID = customerID;
         this.name = name;
         this.address = address;
         this.postalCode = postalCode;
         this.phone = phone;
         this.divisionID = divisionID;
     }
+
 
     public int getCustomerID() {
         return customerID;

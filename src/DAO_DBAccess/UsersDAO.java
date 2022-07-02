@@ -24,18 +24,18 @@ public class UsersDAO {
         try{
             String sql = "SELECT * from users";
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
-            ResultSet rs = ps.getResultSet();
+            ResultSet rs = ps.executeQuery();
 
             while(rs.next()) {
                 int userID = rs.getInt("User_ID");
                 String userName = rs.getString("User_Name");
                 String password = rs.getString("Password");
-                Users u = new Users(userID, userName, password);
-                usersList.add(u);
+                Users users = new Users(userID, userName, password);
+                usersList.add(users);
             }
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
         }
         return usersList;
     }
@@ -49,8 +49,7 @@ public class UsersDAO {
             ps.setString(1, username);
             ps.setString(2, password);
 
-            ps.execute();
-            ResultSet rs = ps.getResultSet();
+            ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
                 currentUser = new Users();
@@ -64,8 +63,8 @@ public class UsersDAO {
                 return false;
             }
         }
-        catch (SQLException throwables) {
-            throwables.printStackTrace();
+        catch (SQLException ex) {
+            ex.printStackTrace();
             return false;
         }
     }

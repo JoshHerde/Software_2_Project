@@ -28,8 +28,11 @@
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
+         <toggleGroup>
+            <ToggleGroup fx:id="appointmentsToggleGroup" />
+         </toggleGroup>
       </RadioButton>
-      <RadioButton fx:id="weekRadioButton" layoutX="666.0" layoutY="68.0" mnemonicParsing="false" onAction="#weekRbClicked" text="Week">
+      <RadioButton fx:id="weekRadioButton" layoutX="666.0" layoutY="68.0" mnemonicParsing="false" onAction="#weekRbClicked" text="Week" toggleGroup="$appointmentsToggleGroup">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
@@ -48,7 +51,7 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
-      <RadioButton fx:id="allRadioButton" layoutX="532.0" layoutY="69.0" mnemonicParsing="false" onAction="#allRbClicked" text="All">
+      <RadioButton fx:id="allRadioButton" layoutX="532.0" layoutY="69.0" mnemonicParsing="false" onAction="#allRbClicked" text="All" toggleGroup="$appointmentsToggleGroup">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
