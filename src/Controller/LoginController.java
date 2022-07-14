@@ -1,6 +1,7 @@
 package Controller;
 
 import DAO_DBAccess.UsersDAO;
+import Model.Users;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,6 +29,12 @@ public class LoginController implements Initializable {
     @FXML private Label userZoneId;
     @FXML private Button loginButton;
     @FXML private Label errorMessageLabel;
+
+    public static Users currentUser;
+
+    public static Users getCurrentUser() {
+        return currentUser;
+    }
 
 
     @FXML void loginButtonClicked(ActionEvent actionEvent) throws IOException, SQLException {

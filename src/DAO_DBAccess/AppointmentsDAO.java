@@ -17,7 +17,7 @@ public class AppointmentsDAO {
 
 
         try {
-            String sql = "SELECT * from appointments ORDER BY Start";
+            String sql = "SELECT * from appointments AS a INNER JOIN contacts AS c ON a.Contact_ID = c.Contact_ID";
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
@@ -44,6 +44,7 @@ public class AppointmentsDAO {
 
     }
 
+
     public static void addAppointment(Appointments appointments) {
         try {
             String sql = "INSERT INTO appointments (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -59,7 +60,7 @@ public class AppointmentsDAO {
             ps.setInt(8, appointments.getUserID());
             ps.setInt(9, appointments.getContactID());
 
-            ps.executeQuery();
+            ps.executeUpdate();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -67,23 +68,40 @@ public class AppointmentsDAO {
 
     }
 
-    public static void editAppointment() {
+    public static void editAppointment(Appointments appointments) {
+        try {
+            String sql = "UPDATE appointments SET (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) " +
+                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) WHERE Appointment_ID = ?";
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
 
+            ps.setString(1, appointments.getTitle());
+            ps.setString(2,appointments.getDescription());
+            ps.setString(3, appointments.getLocation());
+            ps.setString(4, appointments.getType());
+            ps.setTimestamp(5, Timestamp.valueOf(appointments.getStartTime()));
+            ps.setTimestamp(6,Timestamp.valueOf(appointments.getEndTime()));
+            ps.setInt(7, appointments.getCustomerID());
+            ps.setInt(8, appointments.getUserID());
+            ps.setInt(9, appointments.getContactID());
+            ps.setInt(10, appointments.getAppointmentID());
+
+            ps.executeUpdate();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public static void deleteAppointment(int appointmentID) {
-        /*try {
+    public static void deleteAppointment(int dbAppointmentID) {
+        try {
             String sql = "DELETE FROM appointments WHERE Appointment_ID = ?";
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
 
-            ps.setInt(1, int appointmentID);
+            ps.setInt(1, dbAppointmentID);
+            ps.executeUpdate();
 
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-*/
     }
-
-
 }

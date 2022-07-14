@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Appointments;
 import Model.Contacts;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,6 +18,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 public class EditAppointmentController implements Initializable {
@@ -56,6 +58,14 @@ public class EditAppointmentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Appointments selectedAppointment = AppointmentsController.getSelectedAppointment();
 
+        apptIdTextField.setText(String.valueOf(selectedAppointment.getAppointmentID()));
+        apptTitleTextField.setText(selectedAppointment.getTitle());
+        apptDescTextField.setText(selectedAppointment.getDescription());
+        apptLocTextField.setText(selectedAppointment.getLocation());
+        apptTypeTextField.setText(selectedAppointment.getType());
+
+        // HAVING TROUBLE WITH SPINNER AND PICKER
     }
 }

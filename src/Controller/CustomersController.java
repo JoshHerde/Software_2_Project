@@ -2,7 +2,6 @@ package Controller;
 
 import DAO_DBAccess.CustomersDAO;
 import Model.Customers;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,7 +18,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class CustomersController implements Initializable {
@@ -33,10 +31,10 @@ public class CustomersController implements Initializable {
     @FXML private TableColumn<Customers, Integer> customerDivisionCol;
     @FXML private TextField searchTextField;
 
-    private static Customers customerToModify;
+    private static Customers selectedCustomer;
 
-    public static Customers getCustomerToModify() {
-        return customerToModify;
+    public static Customers getSelectedCustomer() {
+        return selectedCustomer;
     }
 
 
@@ -49,9 +47,9 @@ public class CustomersController implements Initializable {
     }
 
     @FXML  void editCustomerClicked(ActionEvent actionEvent) throws IOException {
-        customerToModify = customersTable.getSelectionModel().getSelectedItem();
+        selectedCustomer = customersTable.getSelectionModel().getSelectedItem();
 
-        if (customerToModify == null){
+        if (selectedCustomer == null){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Please select a customer to Edit.");
@@ -66,6 +64,7 @@ public class CustomersController implements Initializable {
     }
 
     @FXML void deleteCustomerClicked(ActionEvent actionEvent) {
+
     }
 
     @FXML void backButtonClicked(ActionEvent actionEvent) throws IOException {
@@ -74,6 +73,9 @@ public class CustomersController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void customersSearchClicked(ActionEvent actionEvent) {
     }
 
     @Override
@@ -85,4 +87,6 @@ public class CustomersController implements Initializable {
         customerPhoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
         customerDivisionCol.setCellValueFactory(new PropertyValueFactory<>("divisionID"));
     }
+
+
 }

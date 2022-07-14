@@ -68,7 +68,20 @@ public class CustomersDAO {
         ps.setInt(6, customer.getDivisionID());
         ps.setInt(7, customer.getCustomerID());
 
-        ps.execute();
+        ps.executeUpdate();
 
+    }
+
+    public static void deleteCustomer(int dbCustomerID) {
+        try {
+            String sql = "DELETE FROM customers WHERE Customer_ID = ?";
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+
+            ps.setInt(1, dbCustomerID);
+            ps.executeUpdate();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 }

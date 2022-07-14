@@ -33,4 +33,19 @@ public class ContactsDAO {
         }
         return contactList;
     }
+
+    public static void addContact(Contacts contacts) {
+        try {
+            String sql = "INSERT INTO contacts (Contact_Name, Email) VALUES(?, ?)";
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+
+            ps.setString(1, contacts.getContactName());
+            ps.setString(2, contacts.getContactEmail());
+
+            ps.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

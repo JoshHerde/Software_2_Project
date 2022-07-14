@@ -2,7 +2,6 @@ package DAO_DBAccess;
 
 import Model.Countries;
 import Utilities.DBConnection;
-import Utilities.DBQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -32,5 +31,26 @@ public class CountriesDAO {
             ex.printStackTrace();
         }
         return countryList;
+    }
+
+    public static void getCountryByID(int dbCountryID) {
+        Countries countries = new Countries();
+        try {
+            String sql = "SELECT * FROM country WHERE Country_ID = ?";
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+
+            ps.setInt(1, dbCountryID);
+            ResultSet rs = ps.executeQuery();
+
+            rs.next();
+
+            countries.setCountryID(rs.getInt("Country_ID"));
+            countries.setCountryName(rs.getString("Country"));
+
+
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -31,4 +31,13 @@ public class DivisionsDAO {
         }
         return divisionsList;
     }
+
+    public static int addDivision(String divisionName, int countryID) throws SQLException {
+        String sql = "INSERT INTO first_level_divisions (Division, Country_ID) VALUES(?, ?)";
+        PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+        ps.setString(1, divisionName);
+        ps.setInt(2, countryID);
+        int rowsAffected = ps.executeUpdate();
+        return rowsAffected;
+    }
 }
