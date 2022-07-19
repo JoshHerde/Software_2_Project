@@ -5,6 +5,7 @@ import Model.Countries;
 import Model.Customers;
 import Model.Divisions;
 import Model.Users;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,6 +20,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class EditCustomerController implements Initializable {
@@ -31,7 +33,7 @@ public class EditCustomerController implements Initializable {
     @FXML private  ComboBox<Countries> countryComboBox;
     @FXML private  ComboBox<Divisions> divisionComboBox;
 
-    private Users currentUser = LoginController.getCurrentUser();
+
 
     @FXML void saveButtonClicked(ActionEvent actionEvent) {
     }
@@ -45,7 +47,7 @@ public class EditCustomerController implements Initializable {
     }
 
     @FXML void countryComboBoxClicked(ActionEvent actionEvent) {
-        Countries selectedCountry = countryComboBox.getSelectionModel().getSelectedItem();
+
     }
 
     @Override

@@ -18,7 +18,8 @@ public class ContactsDAO {
         try {
             String sql = "SELECT * from contacts";
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
+            ps.executeQuery();
+            ResultSet rs = ps.getResultSet();
 
             while (rs.next()) {
                 int contactID = rs.getInt("Contact_ID");
@@ -34,6 +35,8 @@ public class ContactsDAO {
         return contactList;
     }
 
+    /*
+
     public static void addContact(Contacts contacts) {
         try {
             String sql = "INSERT INTO contacts (Contact_Name, Email) VALUES(?, ?)";
@@ -47,5 +50,31 @@ public class ContactsDAO {
         catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    */
+
+    public static Contacts getContactByID(int theContactID) throws SQLException {
+
+        String sql = "SELECT * FROM contacts WHERE Contact_ID = ?";
+        PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+
+        ps.setInt(1, theContactID);
+        ps.executeQuery();
+
+        try {
+            ResultSet rs = ps.getResultSet();
+            while (rs.next()) {
+                int contactID = rs.getInt("Contact_ID");
+                String contactName = rs.getString("Contact_Name");
+                String contactEmail = rs.getString("Email");
+                Contacts contacts = new Contacts(contactID, contactName, contactEmail);
+                return contacts;
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

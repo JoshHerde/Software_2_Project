@@ -20,7 +20,8 @@ public class CustomersDAO {
         try {
             String sql = "SELECT * from customers AS c INNER JOIN first_level_divisions AS d ON c.Division_ID = d.Division_ID INNER JOIN countries AS co ON co.country_ID = d.Country_ID ";
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
+            ps.executeQuery();
+            ResultSet rs = ps.getResultSet();
 
             while(rs.next()) {
                 Customers customers = new Customers(
@@ -43,8 +44,8 @@ public class CustomersDAO {
 
 
     public static void addCustomer(Customers customer) throws SQLException {
-        String sql = "INSERT INTO customers(Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID)" +
-                "VALUES(?, ?, ?, ?, NOW(), ?, NOW(), ?, ?)";
+        String sql = "INSERT INTO customers(Customer_Name, Address, Postal_Code, Phone, Division_ID)" +
+                "VALUES(?, ?, ?, ?, ?)";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
 
         ps.setString(1, customer.getName());
@@ -58,7 +59,7 @@ public class CustomersDAO {
     }
 
     public static void editCustomer(Customers customer) throws SQLException {
-        String sql = "UPDATE customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Last_Update = NOW(), Last_Updated_By = ?, Division_ID = ? WHERE Customer_ID = ?";
+        String sql = "UPDATE customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Division_ID = ? WHERE Customer_ID = ?";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
 
         ps.setString(1, customer.getName());

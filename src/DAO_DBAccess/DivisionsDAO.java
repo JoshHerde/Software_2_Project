@@ -11,19 +11,22 @@ import java.sql.SQLException;
 
 public class DivisionsDAO {
 
-    public ObservableList<Divisions> getAllDivisions() {
+    public static ObservableList<Divisions> getAllDivisions() throws SQLException {
 
         ObservableList<Divisions> divisionsList = FXCollections.observableArrayList();
 
         try {
             String sql = "SELECT * from first_level_divisions";
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
+            ps.executeQuery();
+            ResultSet rs = ps.getResultSet();
 
             while (rs.next()) {
                 int divisionID = rs.getInt("Division_ID");
                 String divisionName = rs.getString("Division");
                 int countryID = rs.getInt("Country_ID");
+                Divisions divisions = new Divisions(divisionID, divisionName, countryID);
+                divisionsList.add(divisions);
             }
         }
         catch (SQLException ex) {
@@ -31,6 +34,28 @@ public class DivisionsDAO {
         }
         return divisionsList;
     }
+
+    public static int getDivisionID(int dbDivisionID) throws SQLException {
+
+        String sql = "SELECT * FROM first_level_divisions WHERE Division_ID = ?";
+        PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+
+        ps.setInt(1, dbDivisionID);
+        ps.executeQuery();
+
+        try {
+            ResultSet rs = ps.getResultSet();
+            while (rs.next()) {
+                return rs.getInt("Division_ID");
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dbDivisionID;
+    }
+
+
 
     public static int addDivision(String divisionName, int countryID) throws SQLException {
         String sql = "INSERT INTO first_level_divisions (Division, Country_ID) VALUES(?, ?)";
@@ -40,4 +65,6 @@ public class DivisionsDAO {
         int rowsAffected = ps.executeUpdate();
         return rowsAffected;
     }
+
+
 }

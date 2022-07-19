@@ -1,7 +1,10 @@
 package Controller;
 
+import DAO_DBAccess.AppointmentsDAO;
 import DAO_DBAccess.CustomersDAO;
+import Model.Appointments;
 import Model.Customers;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,15 +12,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class CustomersController implements Initializable {
@@ -49,21 +50,59 @@ public class CustomersController implements Initializable {
     @FXML  void editCustomerClicked(ActionEvent actionEvent) throws IOException {
         selectedCustomer = customersTable.getSelectionModel().getSelectedItem();
 
-        if (selectedCustomer == null){
+        if (selectedCustomer == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Please select a customer to Edit.");
             alert.showAndWait();
-            return;
         }
-        Parent root = FXMLLoader.load(getClass().getResource("/View/EditCustomer.fxml"));
-        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        else {
+            Parent root = FXMLLoader.load(getClass().getResource("/View/EditCustomer.fxml"));
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 
     @FXML void deleteCustomerClicked(ActionEvent actionEvent) {
+        selectedCustomer = customersTable.getSelectionModel().getSelectedItem();
+
+        if (selectedCustomer == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Please select a customer to delete.");
+            alert.showAndWait();
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Confirm");
+            alert.setHeaderText("Are you sure you want to delete this Customer?");
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                try {
+                    CustomersDAO.deleteCustomer(selectedCustomer.getCustomerID());
+                    ObservableList<Appointments> apptList = AppointmentsDAO.getAllAppointments();
+                    for (Appointments appointments : apptList) {
+                        if (appointments.getCustomerID() == selectedCustomer.getCustomerID()) {
+                            AppointmentsDAO.deleteAppointment(appointments.getAppointmentID());
+                        }
+                    }
+                    CustomersDAO.deleteCustomer(selectedCustomer.getCustomerID());
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+                alert1.setTitle("Confirm");
+                alert1.setHeaderText(selectedCustomer.getName() + " and all of their appointments have been removed from our database.");
+                alert1.showAndWait();
+
+
+            }
+        }
+
 
     }
 

@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 public class AddAppointmentController implements Initializable {
@@ -26,9 +27,9 @@ public class AddAppointmentController implements Initializable {
     @FXML private TextField apptDescTextField;
     @FXML private TextField apptTypeTextField;
     @FXML private DatePicker startDatePicker;
-    @FXML private Spinner startTimeSpinner;
+    @FXML private Spinner<LocalTime> startTimeSpinner;
     @FXML private DatePicker endDatePicker;
-    @FXML private Spinner endTimeSpinner;
+    @FXML private Spinner<LocalTime> endTimeSpinner;
     @FXML private TextField customerIdTextField;
     @FXML private TextField userIdTextField;
 

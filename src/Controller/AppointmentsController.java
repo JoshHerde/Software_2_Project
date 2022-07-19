@@ -4,6 +4,7 @@ package Controller;
 import DAO_DBAccess.AppointmentsDAO;
 import DAO_DBAccess.UsersDAO;
 import Model.Appointments;
+import Model.Customers;
 import Model.Users;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -43,13 +44,16 @@ public class AppointmentsController implements Initializable {
     @FXML private  RadioButton weekRadioButton;
     @FXML private  TextField searchTextField;
 
+    public static ObservableList<Appointments> allAppointments;
+    public static ObservableList<Customers> allCustomers;
+
     private static Appointments selectedAppointment;
 
     public static Appointments getSelectedAppointment() {
         return selectedAppointment;
     }
 
-    public ObservableList<Appointments> allAppointments;
+
 
 
     @FXML void allRbClicked(ActionEvent actionEvent) {
@@ -62,9 +66,23 @@ public class AppointmentsController implements Initializable {
     }
 
     @FXML void monthRbClicked(ActionEvent actionEvent) {
+        try {
+            allAppointments = AppointmentsDAO.getMonthlyAppointments();
+            appointmentsTable.setItems(allAppointments);
+            appointmentsTable.refresh();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML void weekRbClicked(ActionEvent actionEvent) {
+        try {
+            appointmentsTable.setItems(AppointmentsDAO.getWeeklyAppointments());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML void newAppointmentClicked(ActionEvent actionEvent) throws IOException {

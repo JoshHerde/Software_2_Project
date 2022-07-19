@@ -7,7 +7,7 @@ public class Divisions {
     private String divisionName;
     private int countryID;
 
-    Divisions(int divisionID, String divisionName, int countryID) {
+    public Divisions(int divisionID, String divisionName, int countryID) {
         this.divisionID = divisionID;
         this.divisionName = divisionName;
         this.countryID = countryID;

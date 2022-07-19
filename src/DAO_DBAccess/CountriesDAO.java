@@ -18,7 +18,8 @@ public class CountriesDAO {
         try {
             String sql = "SELECT * from countries";
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
+            ps.executeQuery();
+            ResultSet rs = ps.getResultSet();
 
             while(rs.next()) {
                 int countryID = rs.getInt("Country_ID");
@@ -40,7 +41,8 @@ public class CountriesDAO {
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
 
             ps.setInt(1, dbCountryID);
-            ResultSet rs = ps.executeQuery();
+            ps.executeQuery();
+            ResultSet rs = ps.getResultSet();
 
             rs.next();
 

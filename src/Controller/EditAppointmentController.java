@@ -30,9 +30,9 @@ public class EditAppointmentController implements Initializable {
     @FXML private  ComboBox<Contacts> contactComboBox;
     @FXML private  TextField apptTypeTextField;
     @FXML private  DatePicker startDatePicker;
-    @FXML private  Spinner startTimeSpinner;
+    @FXML private  Spinner<LocalTime> startTimeSpinner;
     @FXML private  DatePicker endDatePicker;
-    @FXML private  Spinner endTimeSpinner;
+    @FXML private  Spinner<LocalTime> endTimeSpinner;
     @FXML private  TextField customerIdTextField;
     @FXML private  TextField userIdTextField;
 
