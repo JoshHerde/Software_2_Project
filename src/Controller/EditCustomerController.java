@@ -1,5 +1,6 @@
 package Controller;
 
+import DAO_DBAccess.CountriesDAO;
 import DAO_DBAccess.DivisionsDAO;
 import Model.Countries;
 import Model.Customers;
@@ -33,6 +34,8 @@ public class EditCustomerController implements Initializable {
     @FXML private  ComboBox<Countries> countryComboBox;
     @FXML private  ComboBox<Divisions> divisionComboBox;
 
+    private ObservableList<Countries> countryList = FXCollections.observableArrayList();
+
 
 
     @FXML void saveButtonClicked(ActionEvent actionEvent) {
@@ -50,6 +53,9 @@ public class EditCustomerController implements Initializable {
 
     }
 
+    @FXML void divisionComboBoxClicked(ActionEvent actionEvent) {
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Customers selectedCustomer = CustomersController.getSelectedCustomer();
@@ -60,5 +66,10 @@ public class EditCustomerController implements Initializable {
         postalCodeTextField.setText(selectedCustomer.getPostalCode());
         phoneTextField.setText(selectedCustomer.getPhone());
 
+        countryList = CountriesDAO.getAllCountries();
+        countryComboBox.setItems(countryList);
+
     }
+
+
 }

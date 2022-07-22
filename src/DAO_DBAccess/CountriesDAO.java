@@ -34,8 +34,8 @@ public class CountriesDAO {
         return countryList;
     }
 
-    public static void getCountryByID(int dbCountryID) {
-        Countries countries = new Countries();
+    public static Countries getCountryByID(int dbCountryID) {
+
         try {
             String sql = "SELECT * FROM country WHERE Country_ID = ?";
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
@@ -46,13 +46,16 @@ public class CountriesDAO {
 
             rs.next();
 
-            countries.setCountryID(rs.getInt("Country_ID"));
-            countries.setCountryName(rs.getString("Country"));
+            int countryID = rs.getInt("Country_ID");
+            String countryName = rs.getString("Country");
+            Countries newCountry = new Countries(countryID, countryName);
+            return newCountry;
 
 
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
+        return null;
     }
 }

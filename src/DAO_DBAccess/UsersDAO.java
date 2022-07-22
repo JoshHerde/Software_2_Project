@@ -1,5 +1,6 @@
 package DAO_DBAccess;
 
+import Model.Customers;
 import Model.Users;
 import Utilities.DBConnection;
 import Utilities.LoginLog;
@@ -67,5 +68,30 @@ public class UsersDAO {
             ex.printStackTrace();
             return false;
         }
+    }
+
+    public static Users getUserByID(int theUserID) throws SQLException {
+
+        Users users = new Users();
+
+        try {
+
+            String sql = "SELECT * FROM users WHERE User_ID = ?";
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+
+            ps.setInt(1, theUserID);
+            ps.executeQuery();
+            ResultSet rs = ps.getResultSet();
+            rs.next();
+
+            users.setUserID(rs.getInt("User_ID"));
+            users.setUserName(rs.getString("User_Name"));
+            users.setPassword(rs.getString("Password"));
+
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
     }
 }

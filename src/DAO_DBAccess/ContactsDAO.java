@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public class ContactsDAO {
 
-    public ObservableList<Contacts> getAllContacts() {
+    public static ObservableList<Contacts> getAllContacts() {
 
         ObservableList<Contacts> contactList = FXCollections.observableArrayList();
 
@@ -25,8 +25,8 @@ public class ContactsDAO {
                 int contactID = rs.getInt("Contact_ID");
                 String contactName = rs.getString("Contact_Name");
                 String contactEmail = rs.getString("Email");
-                Contacts contacts = new Contacts(contactID, contactName, contactEmail);
-                contactList.add(contacts);
+                Contacts newContact = new Contacts(contactID, contactName, contactEmail);
+                contactList.add(newContact);
             }
         }
         catch (SQLException ex) {
@@ -68,8 +68,8 @@ public class ContactsDAO {
                 int contactID = rs.getInt("Contact_ID");
                 String contactName = rs.getString("Contact_Name");
                 String contactEmail = rs.getString("Email");
-                Contacts contacts = new Contacts(contactID, contactName, contactEmail);
-                return contacts;
+                Contacts newContact = new Contacts(contactID, contactName, contactEmail);
+                return newContact;
             }
         }
         catch (SQLException e) {

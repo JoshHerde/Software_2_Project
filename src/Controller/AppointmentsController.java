@@ -57,32 +57,15 @@ public class AppointmentsController implements Initializable {
 
 
     @FXML void allRbClicked(ActionEvent actionEvent) {
-
-        try {
-            appointmentsTable.setItems(AppointmentsDAO.getAllAppointments());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        appointmentsTable.setItems(AppointmentsDAO.getAllAppointments());
     }
 
     @FXML void monthRbClicked(ActionEvent actionEvent) {
-        try {
-            allAppointments = AppointmentsDAO.getMonthlyAppointments();
-            appointmentsTable.setItems(allAppointments);
-            appointmentsTable.refresh();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        appointmentsTable.setItems(AppointmentsDAO.getMonthlyAppointments());
     }
 
     @FXML void weekRbClicked(ActionEvent actionEvent) {
-        try {
-            appointmentsTable.setItems(AppointmentsDAO.getWeeklyAppointments());
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        appointmentsTable.setItems(AppointmentsDAO.getWeeklyAppointments());
     }
 
     @FXML void newAppointmentClicked(ActionEvent actionEvent) throws IOException {
@@ -176,8 +159,6 @@ public class AppointmentsController implements Initializable {
         endCol.setCellValueFactory(new PropertyValueFactory<>("endTime"));
         customerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
         userIdCol.setCellValueFactory(new PropertyValueFactory<>("userID"));
-
-
 
     }
 }

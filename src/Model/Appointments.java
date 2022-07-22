@@ -34,6 +34,20 @@ public class Appointments {
 
     }
 
+    public Appointments(String title, String description, String location, String type,
+                         LocalDateTime startTime, LocalDateTime endTime, int customerID, int userID, int contactID) {
+
+        this.title = title;
+        this.description = description;
+        this.location = location;
+        this.type = type;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.customerID = customerID;
+        this.userID = userID;
+        this.contactID = contactID;
+
+    }
     public int getAppointmentID() {
         return appointmentID;
     }

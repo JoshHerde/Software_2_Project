@@ -1,5 +1,6 @@
 package DAO_DBAccess;
 
+import Model.Contacts;
 import Model.Customers;
 import Utilities.DBConnection;
 import javafx.collections.FXCollections;
@@ -84,5 +85,32 @@ public class CustomersDAO {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public static Customers getCustomerByID(int theCustomerID) throws SQLException {
+
+        Customers customers = new Customers();
+
+        try {
+
+        String sql = "SELECT * FROM customers WHERE Customer_ID = ?";
+        PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+
+        ps.setInt(1, theCustomerID);
+        ps.executeQuery();
+        ResultSet rs = ps.getResultSet();
+        rs.next();
+
+        customers.setCustomerID(rs.getInt("Customer_ID"));
+        customers.setName(rs.getString("Customer_Name"));
+        customers.setAddress(rs.getString("Address"));
+        customers.setPostalCode(rs.getString("Postal_Code"));
+        customers.setPhone(rs.getString("Phone"));
+        customers.setDivisionID(rs.getInt("Division_ID"));
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return customers;
     }
 }

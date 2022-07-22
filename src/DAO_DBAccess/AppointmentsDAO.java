@@ -32,9 +32,9 @@ public class AppointmentsDAO {
                 int customerID = rs.getInt("Customer_ID");
                 int userID = rs.getInt("User_ID");
                 int contactID = rs.getInt("Contact_ID");
-                Appointments appointments = new Appointments(appointmentID, title, description, location, type,
+                Appointments newAppointment = new Appointments(appointmentID, title, description, location, type,
                                                                 startTime, endTime, customerID, userID, contactID);
-                allAppointmentList.add(appointments);
+                allAppointmentList.add(newAppointment);
             }
         }
         catch (SQLException ex) {
@@ -48,7 +48,7 @@ public class AppointmentsDAO {
         ObservableList<Appointments> monthlyAppointments = FXCollections.observableArrayList();
 
         LocalDate now = LocalDateTime.now().toLocalDate();
-        LocalDate oneMonth = now.plusMonths(1);
+        LocalDate oneMonth = now.plusDays(30);
 
         try {
             String sql = "SELECT * FROM appointments WHERE Start < ? AND Start > ?";
@@ -70,9 +70,9 @@ public class AppointmentsDAO {
                 int customerID = rs.getInt("Customer_ID");
                 int userID = rs.getInt("User_ID");
                 int contactID = rs.getInt("Contact_ID");
-                Appointments appointments = new Appointments(appointmentID, title, description, location, type,
+                Appointments newAppointment = new Appointments(appointmentID, title, description, location, type,
                         startTime, endTime, customerID, userID, contactID);
-                monthlyAppointments.add(appointments);
+                monthlyAppointments.add(newAppointment);
             }
         }
         catch (SQLException e) {
@@ -107,9 +107,9 @@ public class AppointmentsDAO {
                 int customerID = rs.getInt("Customer_ID");
                 int userID = rs.getInt("User_ID");
                 int contactID = rs.getInt("Contact_ID");
-                Appointments appointments = new Appointments(appointmentID, title, description, location, type,
+                Appointments newAppointment = new Appointments(appointmentID, title, description, location, type,
                         startTime, endTime, customerID, userID, contactID);
-                weeklyAppointmentList.add(appointments);
+                weeklyAppointmentList.add(newAppointment);
             }
         }
         catch (SQLException e) {

@@ -32,7 +32,7 @@ public class CustomersController implements Initializable {
     @FXML private TableColumn<Customers, Integer> customerDivisionCol;
     @FXML private TextField searchTextField;
 
-    private static Customers selectedCustomer;
+    public static Customers selectedCustomer;
 
     public static Customers getSelectedCustomer() {
         return selectedCustomer;

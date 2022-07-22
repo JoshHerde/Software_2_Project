@@ -21,6 +21,18 @@ public class Customers {
         this.divisionID = divisionID;
     }
 
+    public Customers(String name, String address, String postalCode, String phone, int divisionID) {
+        this.name = name;
+        this.address = address;
+        this.postalCode = postalCode;
+        this.phone = phone;
+        this.divisionID = divisionID;
+    }
+
+    public Customers() {
+
+    }
+
 
     public int getCustomerID() {
         return customerID;
@@ -74,5 +86,10 @@ public class Customers {
 
     public void setDivisionID(int divisionID) {
         this.divisionID = divisionID;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

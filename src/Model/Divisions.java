@@ -41,15 +41,8 @@ public class Divisions {
         this.countryID = countryID;
     }
 
-
-
-
-
-
-
-
-
-
-
-
+    @Override
+    public String toString() {
+        return divisionName;
+    }
 }

@@ -1,7 +1,16 @@
 package Controller;
 
+import DAO_DBAccess.AppointmentsDAO;
+import DAO_DBAccess.ContactsDAO;
+import DAO_DBAccess.CustomersDAO;
+import DAO_DBAccess.UsersDAO;
 import Model.Appointments;
 import Model.Contacts;
+import Model.Customers;
+import Model.Users;
+import Utilities.TimeHelper;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,19 +18,20 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class EditAppointmentController implements Initializable {
+
+
 
     @FXML private TextField apptIdTextField;
     @FXML private  TextField apptTitleTextField;
@@ -30,11 +40,20 @@ public class EditAppointmentController implements Initializable {
     @FXML private  ComboBox<Contacts> contactComboBox;
     @FXML private  TextField apptTypeTextField;
     @FXML private  DatePicker startDatePicker;
-    @FXML private  Spinner<LocalTime> startTimeSpinner;
+    @FXML private ComboBox<LocalTime> startTimeComboBox;
     @FXML private  DatePicker endDatePicker;
-    @FXML private  Spinner<LocalTime> endTimeSpinner;
-    @FXML private  TextField customerIdTextField;
-    @FXML private  TextField userIdTextField;
+    @FXML private ComboBox<LocalTime> endTimeComboBox;
+    @FXML private ComboBox<Customers> customerIDComboBox;
+    @FXML private ComboBox<Users> userIDComboBox;
+
+    public Contacts selectedContact;
+    public Customers selectedCustomer;
+    public Users selectedUser;
+
+    private DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+    private ObservableList<Contacts> contactList = FXCollections.observableArrayList();
+    private ObservableList<Customers> customersList = FXCollections.observableArrayList();
+    private ObservableList<Users> usersList = FXCollections.observableArrayList();
 
     @FXML void cancelButtonClicked(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/View/Appointments.fxml"));
@@ -44,16 +63,25 @@ public class EditAppointmentController implements Initializable {
         stage.show();
     }
 
-    @FXML void saveButtonClicked(ActionEvent actionEvent) {
+    @FXML void saveButtonClicked(ActionEvent actionEvent) throws IOException {
         String title = apptTitleTextField.getText();
         String description = apptDescTextField.getText();
         String location = apptLocTextField.getText();
         String type = apptTypeTextField.getText();
-        LocalDateTime startTime;
-        LocalDateTime endTime;
-        int customerID;
-        int userID;
-        int contactID;
+        LocalDateTime startDateTime = LocalDateTime.of(startDatePicker.getValue(), LocalTime.parse(startTimeComboBox.getValue().toString()));
+        LocalDateTime endDateTime = LocalDateTime.of(endDatePicker.getValue(), LocalTime.parse(endTimeComboBox.getValue().toString()));
+        int contactID = contactComboBox.getSelectionModel().getSelectedItem().getContactID();
+        int customerID = customerIDComboBox.getSelectionModel().getSelectedItem().getCustomerID();
+        int userID = userIDComboBox.getSelectionModel().getSelectedItem().getUserID();
+
+        Appointments newAppointment = new Appointments(title, description, location, type, startDateTime, endDateTime, contactID, customerID, userID);
+        AppointmentsDAO.addAppointment(newAppointment);
+
+        Parent root = FXMLLoader.load(getClass().getResource("/view/Appointments.fxml"));
+        Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @Override
@@ -66,6 +94,30 @@ public class EditAppointmentController implements Initializable {
         apptLocTextField.setText(selectedAppointment.getLocation());
         apptTypeTextField.setText(selectedAppointment.getType());
 
-        // HAVING TROUBLE WITH SPINNER AND PICKER
+        startDatePicker.setValue(selectedAppointment.getStartTime().toLocalDate());
+        endDatePicker.setValue(selectedAppointment.getEndTime().toLocalDate());
+
+        startTimeComboBox.setItems(TimeHelper.getStartTimes());
+        endTimeComboBox.setItems(TimeHelper.getEndTimes());
+
+        try {
+            contactList = ContactsDAO.getAllContacts();
+            contactComboBox.setItems(contactList);
+            selectedContact = ContactsDAO.getContactByID(selectedAppointment.getContactID());
+            contactComboBox.setValue(selectedContact);
+
+            customersList = CustomersDAO.getAllCustomers();
+            customerIDComboBox.setItems(customersList);
+            selectedCustomer = CustomersDAO.getCustomerByID(selectedAppointment.getCustomerID());
+            customerIDComboBox.setValue(selectedCustomer);
+
+            usersList = UsersDAO.getAllUsers();
+            userIDComboBox.setItems(usersList);
+            selectedUser = UsersDAO.getUserByID(selectedAppointment.getUserID());
+            userIDComboBox.setValue(selectedUser);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -24,7 +24,7 @@
       <TextField fx:id="postalCodeTextField" layoutX="126.0" layoutY="256.0" prefWidth="340.0" />
       <TextField fx:id="phoneTextField" layoutX="126.0" layoutY="300.0" prefWidth="340.0" />
       <ComboBox fx:id="countryComboBox" layoutX="126.0" layoutY="337.0" onAction="#countryComboBoxClicked" prefWidth="200.0" />
-      <ComboBox fx:id="divisionComboBox" layoutX="126.0" layoutY="376.0" prefWidth="200.0" />
+      <ComboBox fx:id="divisionComboBox" layoutX="126.0" layoutY="376.0" onAction="#divisionComboBoxClicked" prefWidth="200.0" />
       <Button layoutX="358.0" layoutY="553.0" mnemonicParsing="false" onAction="#saveButtonClicked" text="Save" />
       <Button layoutX="414.0" layoutY="553.0" mnemonicParsing="false" onAction="#cancelButtonClicked" text="Cancel" />
    </children>
