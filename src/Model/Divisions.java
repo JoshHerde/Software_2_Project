@@ -13,6 +13,9 @@ public class Divisions {
         this.countryID = countryID;
     }
 
+    public Divisions() {
+
+    }
 
 
     public int getDivisionID() {

@@ -18,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -53,39 +54,69 @@ public class AddAppointmentController implements Initializable {
 
 
     @FXML void saveButtonClicked(ActionEvent actionEvent) {
+
+
         try {
             String title = apptTitleTextField.getText();
             String description = apptDescTextField.getText();
             String location = apptLocTextField.getText();
             String type = apptTypeTextField.getText();
 
-            //Start date and time
-            LocalDate startDate = startDatePicker.getValue();
-            LocalTime startTime = startTimeComboBox.getValue();
-            LocalDateTime startDateTime = LocalDateTime.of(startDate, startTime);
-
-            //End date and time
-            LocalDate endDate = endDatePicker.getValue();
-            LocalTime endTime = endTimeComboBox.getValue();
-            LocalDateTime endDateTime = LocalDateTime.of(endDate, endTime);
+            LocalDateTime startTime = getStartInfo();
+            LocalDateTime endTime = getEndInfo();
 
             int contactID = contactComboBox.getSelectionModel().getSelectedItem().getContactID();
             int customerID = customerIDComboBox.getSelectionModel().getSelectedItem().getCustomerID();
             int userID = userIDComboBox.getSelectionModel().getSelectedItem().getUserID();
 
-            Appointments newAppointment = new Appointments(title, description, location, type, startDateTime, endDateTime, contactID, customerID, userID);
-            AppointmentsDAO.addAppointment(newAppointment);
+            LocalTime openHours = LocalTime.of(8, 0);
+            LocalTime closedHours = LocalTime.of(22, 0);
 
-            Parent root = FXMLLoader.load(getClass().getResource("/view/Appointments.fxml"));
-            Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+            Appointments newAppointment = new Appointments(title, description, location, type, startTime, endTime, contactID, customerID, userID);
 
+            for (Appointments appointments : AppointmentsDAO.getAllAppointments()) {
+                if ((startTime.isEqual(appointments.getStartTime()) || startTime.isAfter(appointments.getStartTime()) && startTime.isBefore(appointments.getEndTime()))) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Scheduling Time Error");
+                    alert.setHeaderText("The time you have chosen for your appointment overlaps with others. Please choose a new appointment time.");
+                    alert.showAndWait();
+                }
+
+                if (startTime.toLocalTime().isBefore(openHours) || endTime.toLocalTime().isAfter(closedHours)) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Scheduling Time Error");
+                    alert.setHeaderText("The time you have chosen for your appointment isn't within business hours of 08:00 EST and 10:00 EST.");
+                    alert.showAndWait();
+                }
+
+                if (!apptTitleTextField.equals("") && !apptDescTextField.equals("") && !apptLocTextField.equals("") && !apptTypeTextField.equals("")) {
+
+                    AppointmentsDAO.addAppointment(newAppointment);
+
+                    Parent root = FXMLLoader.load(getClass().getResource("/view/Appointments.fxml"));
+                    Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.show();
+
+                }
+            }
         }
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private LocalDateTime getStartInfo() {
+        LocalDate startDate = startDatePicker.getValue();
+        LocalTime startTime = startTimeComboBox.getValue();
+        return LocalDateTime.of(startDate, startTime);
+    }
+
+    private LocalDateTime getEndInfo() {
+        LocalDate endDate = endDatePicker.getValue();
+        LocalTime endTime = endTimeComboBox.getValue();
+        return  LocalDateTime.of(endDate, endTime);
     }
 
 
@@ -95,6 +126,8 @@ public class AddAppointmentController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+
+
     }
 
     @Override

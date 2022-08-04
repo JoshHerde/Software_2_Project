@@ -45,18 +45,23 @@ public class CustomersDAO {
 
 
     public static void addCustomer(Customers customer) throws SQLException {
-        String sql = "INSERT INTO customers(Customer_Name, Address, Postal_Code, Phone, Division_ID)" +
-                "VALUES(?, ?, ?, ?, ?)";
-        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        try {
 
-        ps.setString(1, customer.getName());
-        ps.setString(2, customer.getAddress());
-        ps.setString(3, customer.getPostalCode());
-        ps.setString(4, customer.getPhone());
-        ps.setInt(7, customer.getDivisionID());
+            String sql = "INSERT INTO customers(Customer_Name, Address, Postal_Code, Phone, Division_ID)" +
+                    "VALUES(?, ?, ?, ?, ?)";
+            PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
 
-        ps.executeUpdate();
+            ps.setString(1, customer.getName());
+            ps.setString(2, customer.getAddress());
+            ps.setString(3, customer.getPostalCode());
+            ps.setString(4, customer.getPhone());
+            ps.setInt(7, customer.getDivisionID());
 
+            ps.execute();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void editCustomer(Customers customer) throws SQLException {
@@ -93,22 +98,22 @@ public class CustomersDAO {
 
         try {
 
-        String sql = "SELECT * FROM customers WHERE Customer_ID = ?";
-        PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+            String sql = "SELECT * FROM customers WHERE Customer_ID = ?";
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
 
-        ps.setInt(1, theCustomerID);
-        ps.executeQuery();
-        ResultSet rs = ps.getResultSet();
-        rs.next();
+            ps.setInt(1, theCustomerID);
+            ps.executeQuery();
+            ResultSet rs = ps.getResultSet();
+            rs.next();
 
-        customers.setCustomerID(rs.getInt("Customer_ID"));
-        customers.setName(rs.getString("Customer_Name"));
-        customers.setAddress(rs.getString("Address"));
-        customers.setPostalCode(rs.getString("Postal_Code"));
-        customers.setPhone(rs.getString("Phone"));
-        customers.setDivisionID(rs.getInt("Division_ID"));
+            customers.setCustomerID(rs.getInt("Customer_ID"));
+            customers.setName(rs.getString("Customer_Name"));
+            customers.setAddress(rs.getString("Address"));
+            customers.setPostalCode(rs.getString("Postal_Code"));
+            customers.setPhone(rs.getString("Phone"));
+            customers.setDivisionID(rs.getInt("Division_ID"));
         }
-        catch (SQLException e) {
+            catch (SQLException e) {
             e.printStackTrace();
         }
         return customers;

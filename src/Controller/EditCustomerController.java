@@ -35,10 +35,32 @@ public class EditCustomerController implements Initializable {
     @FXML private  ComboBox<Divisions> divisionComboBox;
 
     private ObservableList<Countries> countryList = FXCollections.observableArrayList();
+    private Users currentUser = LoginController.getCurrentUser();
+    private Customers selectedCustomer;
+
 
 
 
     @FXML void saveButtonClicked(ActionEvent actionEvent) {
+        try {
+            String name = nameTextField.getText();
+            String address = addressTextField.getText();
+            String postalCode = postalCodeTextField.getText();
+            String phone = phoneTextField.getText();
+            int divisionID = divisionComboBox.getSelectionModel().getSelectedItem().getDivisionID();
+
+            Customers newCustomer = new Customers(name, address, postalCode, phone, divisionID);
+            newCustomer.setCustomerID(selectedCustomer.getCustomerID());
+
+            Parent root = FXMLLoader.load(getClass().getResource("/view/Customers.fxml"));
+            Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML void cancelButtonClicked(ActionEvent actionEvent) throws IOException {
@@ -50,15 +72,28 @@ public class EditCustomerController implements Initializable {
     }
 
     @FXML void countryComboBoxClicked(ActionEvent actionEvent) {
+        try {
+            Countries selectedCountry = countryComboBox.getSelectionModel().getSelectedItem();
+            ObservableList<Divisions> databaseDivisions = DivisionsDAO.getAllDivisions();
+            ObservableList<Divisions> countryDivisions = FXCollections.observableArrayList();
+
+            for (Divisions divisions : databaseDivisions) {
+                if (divisions.getCountryID() == selectedCountry.getCountryID()) {
+                    countryDivisions.add(divisions);
+                }
+            }
+            divisionComboBox.setItems(countryDivisions);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
-    @FXML void divisionComboBoxClicked(ActionEvent actionEvent) {
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Customers selectedCustomer = CustomersController.getSelectedCustomer();
+        selectedCustomer = CustomersController.getSelectedCustomer();
 
         customerIDTextField.setText(String.valueOf(selectedCustomer.getCustomerID()));
         nameTextField.setText(String.valueOf(selectedCustomer.getName()));
@@ -66,10 +101,25 @@ public class EditCustomerController implements Initializable {
         postalCodeTextField.setText(selectedCustomer.getPostalCode());
         phoneTextField.setText(selectedCustomer.getPhone());
 
-        countryList = CountriesDAO.getAllCountries();
-        countryComboBox.setItems(countryList);
+        try {
+            Divisions selectedDivision = DivisionsDAO.getDivisionName(selectedCustomer.getDivisionID());
+            Countries countries = CountriesDAO.getCountryByID(selectedDivision.getCountryID());
 
+            countryList = CountriesDAO.getAllCountries();
+            countryComboBox.setItems(countryList);
+
+            ObservableList<Divisions> databaseDivisions = DivisionsDAO.getAllDivisions();
+            ObservableList<Divisions> countryDivisions = FXCollections.observableArrayList();
+
+            for (Divisions divisions : databaseDivisions) {
+
+            }
+
+            divisionComboBox.setItems(countryDivisions);
+
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
-
-
 }

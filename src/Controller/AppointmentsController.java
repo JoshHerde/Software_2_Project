@@ -54,8 +54,6 @@ public class AppointmentsController implements Initializable {
     }
 
 
-
-
     @FXML void allRbClicked(ActionEvent actionEvent) {
         appointmentsTable.setItems(AppointmentsDAO.getAllAppointments());
     }

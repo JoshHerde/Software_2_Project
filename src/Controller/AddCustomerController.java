@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -45,17 +46,28 @@ public class AddCustomerController implements Initializable {
             int divisionID = divisionComboBox.getSelectionModel().getSelectedItem().getDivisionID();
 
             Customers newCustomer = new Customers(name, address, postalCode, phone, divisionID);
-            CustomersDAO.addCustomer(newCustomer);
 
-            Parent root = FXMLLoader.load(getClass().getResource("/view/Customers.fxml"));
-            Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+            if (name.isEmpty() && address.isEmpty() && postalCode.isEmpty() && phone.isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Empty Text Fields");
+                alert.setHeaderText("Please fill in all text fields.");
+                alert.showAndWait();
+            }
+
+            else {
+                CustomersDAO.addCustomer(newCustomer);
+
+                Parent root = FXMLLoader.load(getClass().getResource("/view/Customers.fxml"));
+                Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+            }
         }
-        catch (SQLException | IOException e) {
+        catch (IOException | SQLException e) {
             e.printStackTrace();
         }
+
     }
 
     @FXML void cancelButtonClicked(ActionEvent actionEvent) throws IOException {
@@ -69,23 +81,39 @@ public class AddCustomerController implements Initializable {
     public void countryComboBoxClicked(ActionEvent actionEvent) {
         try {
             Countries selectedCountry = countryComboBox.getSelectionModel().getSelectedItem();
-            ObservableList<Divisions> dbDivisions = DivisionsDAO.getAllDivisions();
-            ObservableList<Divisions> divisionByCountry = FXCollections.observableArrayList();
+            ObservableList<Divisions> databaseDivisions = DivisionsDAO.getAllDivisions();
+            ObservableList<Divisions> countryDivisions = FXCollections.observableArrayList();
 
-            for (Divisions divisions : dbDivisions) {
+            for (Divisions divisions : databaseDivisions) {
                 if (divisions.getCountryID() == selectedCountry.getCountryID()) {
-                    divisionByCountry.add(divisions);
+                    countryDivisions.add(divisions);
                 }
             }
-            divisionComboBox.setItems(divisionByCountry);
+            divisionComboBox.setItems(countryDivisions);
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void divisionComboBoxClicked(ActionEvent actionEvent) {
+    public boolean customerValid() {
+        if (nameTextField.getText().isEmpty() || addressTextField.getText().isEmpty() || postalCodeTextField.getText().isEmpty() || phoneTextField.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Empty Text Fields");
+            alert.setHeaderText("Please fill in all text fields.");
+            alert.showAndWait();
+            return false;
+        }
+        if (countryComboBox.getSelectionModel().isEmpty() || divisionComboBox.getSelectionModel().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Empty Combo Box");
+            alert.setHeaderText("Please select Country and Division.");
+            alert.showAndWait();
+            return false;
+        }
+        return true;
     }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
