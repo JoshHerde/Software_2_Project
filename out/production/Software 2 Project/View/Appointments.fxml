@@ -56,5 +56,10 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </RadioButton>
+      <Button layoutX="487.0" layoutY="558.0" mnemonicParsing="false" onAction="#reportsButtonClicked" prefHeight="32.0" prefWidth="126.0" style="-fx-background-color: fcf47c; -fx-border-color: black;" text="Reports">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

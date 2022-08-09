@@ -133,7 +133,7 @@ public class AppointmentsDAO {
             ps.setInt(7, appointments.getCustomerID());
             ps.setInt(8, appointments.getUserID());
             ps.setInt(9, appointments.getContactID());
-
+            System.out.println(ps.toString());
             ps.executeUpdate();
 
         } catch (Exception e) {
@@ -178,4 +178,35 @@ public class AppointmentsDAO {
             ex.printStackTrace();
         }
     }
+    public static ObservableList<Appointments> getAllByContact() {
+        ObservableList<Appointments> allByContact = FXCollections.observableArrayList();
+
+        try {
+            String sql = "SELECT * from appointments ORDER BY Contact_ID, Start";
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int appointmentID = rs.getInt("Appointment_ID");
+                String title = rs.getString("Title");
+                String description = rs.getString("Description");
+                String location = rs.getString("Location");
+                String type = rs.getString("Type");
+                LocalDateTime startTime = rs.getTimestamp("Start").toLocalDateTime();
+                LocalDateTime endTime = rs.getTimestamp("End").toLocalDateTime();
+                int customerID = rs.getInt("Customer_ID");
+                int userID = rs.getInt("User_ID");
+                int contactID = rs.getInt("Contact_ID");
+                Appointments newAppointment = new Appointments(appointmentID, title, description, location, type,
+                        startTime, endTime, customerID, userID, contactID);
+                allByContact.add(newAppointment);
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return allByContact;
+
+    }
+
 }

@@ -34,14 +34,14 @@ public class CountriesDAO {
         return countryList;
     }
 
-    public static Countries getCountryByID(int dbCountryID) {
+    public static Countries getByID(int dbCountryID) {
 
         try {
             String sql = "SELECT * FROM country WHERE Country_ID = ?";
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
 
             ps.setInt(1, dbCountryID);
-            ps.executeQuery();
+            ps.execute();
             ResultSet rs = ps.getResultSet();
 
             rs.next();

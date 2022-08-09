@@ -35,7 +35,7 @@ public class DivisionsDAO {
         return divisionsList;
     }
 
-    public static Divisions getDivisionName(int dbDivisionID) throws SQLException {
+    public static Divisions getByID(int dbDivisionID) throws SQLException {
 
         Divisions divisions = new Divisions();
 

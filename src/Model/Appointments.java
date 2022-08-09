@@ -1,6 +1,7 @@
 package Model;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Appointments {
@@ -48,6 +49,8 @@ public class Appointments {
         this.contactID = contactID;
 
     }
+
+
     public int getAppointmentID() {
         return appointmentID;
     }

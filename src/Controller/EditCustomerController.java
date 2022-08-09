@@ -1,6 +1,7 @@
 package Controller;
 
 import DAO_DBAccess.CountriesDAO;
+import DAO_DBAccess.CustomersDAO;
 import DAO_DBAccess.DivisionsDAO;
 import Model.Countries;
 import Model.Customers;
@@ -15,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -52,15 +54,29 @@ public class EditCustomerController implements Initializable {
             Customers newCustomer = new Customers(name, address, postalCode, phone, divisionID);
             newCustomer.setCustomerID(selectedCustomer.getCustomerID());
 
+            if (nameTextField.getText().isBlank() && addressTextField.getText().isBlank() && postalCodeTextField.getText().isBlank() && phoneTextField.getText().isBlank()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Empty Text Fields");
+                alert.setHeaderText("Please fill in all text fields.");
+                alert.showAndWait();
+                return;
+            }
+
+            //Customers newCustomer = new Customers(name, address, postalCode, phone, divisionID);
+            //newCustomer.setCustomerID(selectedCustomer.getCustomerID());
+
+            CustomersDAO.editCustomer(newCustomer);
+
             Parent root = FXMLLoader.load(getClass().getResource("/view/Customers.fxml"));
             Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
         }
-        catch (IOException e) {
+        catch (IOException | SQLException e) {
             e.printStackTrace();
         }
+
     }
 
     @FXML void cancelButtonClicked(ActionEvent actionEvent) throws IOException {
@@ -101,12 +117,17 @@ public class EditCustomerController implements Initializable {
         postalCodeTextField.setText(selectedCustomer.getPostalCode());
         phoneTextField.setText(selectedCustomer.getPhone());
 
+
+
+
         try {
-            Divisions selectedDivision = DivisionsDAO.getDivisionName(selectedCustomer.getDivisionID());
-            Countries countries = CountriesDAO.getCountryByID(selectedDivision.getCountryID());
+            Divisions selectedDivision = DivisionsDAO.getByID(selectedCustomer.getDivisionID());
+            Countries countries = CountriesDAO.getByID(selectedDivision.getCountryID());
+
 
             countryList = CountriesDAO.getAllCountries();
             countryComboBox.setItems(countryList);
+            countryComboBox.setValue(countries);
 
             ObservableList<Divisions> databaseDivisions = DivisionsDAO.getAllDivisions();
             ObservableList<Divisions> countryDivisions = FXCollections.observableArrayList();
@@ -116,6 +137,7 @@ public class EditCustomerController implements Initializable {
             }
 
             divisionComboBox.setItems(countryDivisions);
+            divisionComboBox.setValue(selectedDivision);
 
         }
         catch (SQLException e) {

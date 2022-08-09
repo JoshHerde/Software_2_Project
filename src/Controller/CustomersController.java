@@ -24,11 +24,14 @@ import java.util.ResourceBundle;
 public class CustomersController implements Initializable {
 
 
+
     @FXML private TableView<Customers> customersTable;
+    @FXML private TableColumn<Customers, Integer> customerIDCol;
     @FXML private TableColumn<Customers, String> customerNameCol;
     @FXML private TableColumn<Customers, String> customerAddressCol;
     @FXML private TableColumn<Customers, String> customerPostalCol;
     @FXML private TableColumn<Customers, String> customerPhoneCol;
+    @FXML private TableColumn<Customers, String> customerCountryCol;
     @FXML private TableColumn<Customers, Integer> customerDivisionCol;
     @FXML private TextField searchTextField;
 
@@ -120,11 +123,15 @@ public class CustomersController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         customersTable.setItems(CustomersDAO.getAllCustomers());
+        customerIDCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
         customerNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         customerAddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
         customerPostalCol.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
         customerPhoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        customerCountryCol.setCellValueFactory(new PropertyValueFactory<>("countryID"));
         customerDivisionCol.setCellValueFactory(new PropertyValueFactory<>("divisionID"));
+
+
     }
 
 

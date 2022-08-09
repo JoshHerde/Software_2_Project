@@ -45,24 +45,23 @@ public class AddCustomerController implements Initializable {
             String phone = phoneTextField.getText();
             int divisionID = divisionComboBox.getSelectionModel().getSelectedItem().getDivisionID();
 
-            Customers newCustomer = new Customers(name, address, postalCode, phone, divisionID);
-
-            if (name.isEmpty() && address.isEmpty() && postalCode.isEmpty() && phone.isEmpty()) {
+            if (nameTextField.getText().isEmpty() && addressTextField.getText().isEmpty() && postalCodeTextField.getText().isEmpty() && phoneTextField.getText().isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Empty Text Fields");
                 alert.setHeaderText("Please fill in all text fields.");
                 alert.showAndWait();
+                return;
             }
 
-            else {
-                CustomersDAO.addCustomer(newCustomer);
+            Customers newCustomer = new Customers(name, address, postalCode, phone, divisionID);
+            CustomersDAO.addCustomer(newCustomer);
 
-                Parent root = FXMLLoader.load(getClass().getResource("/view/Customers.fxml"));
-                Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
-            }
+            Parent root = FXMLLoader.load(getClass().getResource("/view/Customers.fxml"));
+            Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
         }
         catch (IOException | SQLException e) {
             e.printStackTrace();

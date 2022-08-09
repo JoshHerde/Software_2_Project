@@ -33,3 +33,10 @@ public class Main extends Application {
     }
 
 }
+
+//edit customer alert not working with empty fields
+//do i need an alert for empty country combo, if so where should i add it.
+// can i remove the search bars. doesnt say i need that
+//how to have country and division combos display in edit customer
+
+

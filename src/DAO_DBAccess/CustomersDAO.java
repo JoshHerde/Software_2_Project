@@ -1,6 +1,6 @@
 package DAO_DBAccess;
 
-import Model.Contacts;
+
 import Model.Customers;
 import Utilities.DBConnection;
 import javafx.collections.FXCollections;
@@ -9,8 +9,7 @@ import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
+
 
 public class CustomersDAO {
 
@@ -19,28 +18,32 @@ public class CustomersDAO {
         ObservableList<Customers> customersList = FXCollections.observableArrayList();
 
         try {
-            String sql = "SELECT * from customers AS c INNER JOIN first_level_divisions AS d ON c.Division_ID = d.Division_ID INNER JOIN countries AS co ON co.country_ID = d.Country_ID ";
+            //String sql = "SELECT * from customers AS c INNER JOIN first_level_divisions AS d ON c.Division_ID = d.Division_ID INNER JOIN countries AS co ON co.country_ID = d.Country_ID ";
+            String sql = "SELECT customers.Customer_ID, customers.Customer_Name, customers.Address, customers.Postal_Code, customers.Phone, countries.Country, first_level_divisions.Division,customers.Division_ID, countries.Country_ID FROM customers INNER JOIN first_level_divisions ON first_level_divisions.Division_ID = customers.Division_ID INNER JOIN countries ON first_level_divisions.Country_ID = countries.Country_ID";
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
             ps.executeQuery();
             ResultSet rs = ps.getResultSet();
 
             while(rs.next()) {
-                Customers customers = new Customers(
+                Customers newCustomer = new Customers(
                     rs.getInt("Customer_ID"),
                     rs.getString("Customer_Name"),
                     rs.getString("Address"),
                     rs.getString("Postal_Code"),
                     rs.getString("Phone"),
-                    rs.getInt("Division_ID")
-                );
-                customersList.add(customers);
+                    rs.getString("Country"),
+                    rs.getString("Division"),
+                    rs.getInt("Division_ID"),
+                    rs.getInt("Country_ID"));
+
+                customersList.add(newCustomer);
             }
             return customersList;
         }
         catch (SQLException ex) {
             ex.printStackTrace();
-            return null;
         }
+        return null;
     }
 
 
@@ -55,9 +58,9 @@ public class CustomersDAO {
             ps.setString(2, customer.getAddress());
             ps.setString(3, customer.getPostalCode());
             ps.setString(4, customer.getPhone());
-            ps.setInt(7, customer.getDivisionID());
+            ps.setInt(5, customer.getDivisionID());
 
-            ps.execute();
+            ps.executeUpdate();
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -72,8 +75,8 @@ public class CustomersDAO {
         ps.setString(2, customer.getAddress());
         ps.setString(3, customer.getPostalCode());
         ps.setString(4, customer.getPhone());
-        ps.setInt(6, customer.getDivisionID());
-        ps.setInt(7, customer.getCustomerID());
+        ps.setInt(5, customer.getDivisionID());
+        ps.setInt(6, customer.getCustomerID());
 
         ps.executeUpdate();
 

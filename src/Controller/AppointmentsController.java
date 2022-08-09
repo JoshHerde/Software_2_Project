@@ -2,10 +2,12 @@ package Controller;
 
 
 import DAO_DBAccess.AppointmentsDAO;
+import DAO_DBAccess.ContactsDAO;
 import DAO_DBAccess.UsersDAO;
 import Model.Appointments;
 import Model.Customers;
 import Model.Users;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,6 +22,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -32,12 +37,12 @@ public class AppointmentsController implements Initializable {
     @FXML private TableColumn<Appointments, String> titleCol;
     @FXML private TableColumn<Appointments, String> descCol;
     @FXML private TableColumn<Appointments, String> locCol;
-    @FXML private TableColumn<Appointments, String> contactCol;
     @FXML private TableColumn<Appointments, String> typeCol;
-    @FXML private TableColumn<Appointments, String> startCol;
-    @FXML private TableColumn<Appointments, String> endCol;
+    @FXML private TableColumn<Appointments, LocalDateTime> startCol;
+    @FXML private TableColumn<Appointments, LocalDateTime> endCol;
     @FXML private TableColumn<Appointments, Integer> customerIdCol;
     @FXML private TableColumn<Appointments, Integer> userIdCol;
+    @FXML private TableColumn<Appointments, String> contactCol;
     @FXML private ToggleGroup appointmentsToggleGroup;
     @FXML private RadioButton allRadioButton;
     @FXML private  RadioButton monthRadioButton;
@@ -89,12 +94,17 @@ public class AppointmentsController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+
     }
 
     @FXML void deleteAppointmentClicked(ActionEvent actionEvent) {
         selectedAppointment = appointmentsTable.getSelectionModel().getSelectedItem();
 
         if(selectedAppointment == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Please select an appointment to Delete.");
+            alert.showAndWait();
         }
 
         else {
@@ -140,23 +150,34 @@ public class AppointmentsController implements Initializable {
         stage.show();
     }
 
-    public void appointmentSearchClicked(ActionEvent actionEvent) {
-        String searchString = searchTextField.getText();
+    @FXML void reportsButtonClicked(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/View/Reports.fxml"));
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
-    @Override
+    public void appointmentSearchClicked(ActionEvent actionEvent) {
+    }
+
+        @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         appointmentsTable.setItems(AppointmentsDAO.getAllAppointments());
         idCol.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
         titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         descCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         locCol.setCellValueFactory(new PropertyValueFactory<>("location"));
-        contactCol.setCellValueFactory(new PropertyValueFactory<>("contactID"));
         typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         startCol.setCellValueFactory(new PropertyValueFactory<>("startTime"));
         endCol.setCellValueFactory(new PropertyValueFactory<>("endTime"));
         customerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
         userIdCol.setCellValueFactory(new PropertyValueFactory<>("userID"));
+        contactCol.setCellValueFactory(new PropertyValueFactory<>("contactID"));
+
+        allRadioButton.setSelected(true);
 
     }
+
+
 }
