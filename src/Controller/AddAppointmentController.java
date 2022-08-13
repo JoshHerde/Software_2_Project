@@ -9,6 +9,7 @@ import Model.Contacts;
 import Model.Customers;
 import Model.Users;
 import Utilities.TimeHelper;
+import Utilities.ValidAppointment;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -65,7 +66,7 @@ public class AddAppointmentController implements Initializable {
             LocalDateTime startTime = getStartInfo();
             LocalDateTime endTime = getEndInfo();
 
-            if (apptTitleTextField.getText().isBlank() && apptDescTextField.getText().isBlank() && apptLocTextField.getText().isBlank() && apptTypeTextField.getText().isBlank()) {
+            if (apptTitleTextField.getText().isBlank() || apptDescTextField.getText().isBlank() || apptLocTextField.getText().isBlank() || apptTypeTextField.getText().isBlank()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Empty Text Field");
                 alert.setHeaderText("Please make sure all text fields are filled out");
@@ -73,57 +74,104 @@ public class AddAppointmentController implements Initializable {
                 return;
             }
 
-            int contactID = contactComboBox.getSelectionModel().getSelectedItem().getContactID();
-            int customerID = customerIDComboBox.getSelectionModel().getSelectedItem().getCustomerID();
-            int userID = userIDComboBox.getSelectionModel().getSelectedItem().getUserID();
+            Contacts contacts = contactComboBox.getValue();
+            Customers customers = customerIDComboBox.getValue();
+            Users users = userIDComboBox.getValue();
+
+            if (contacts == null || customers == null || users == null) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Empty Contact, Customer or User combo box");
+                alert.setHeaderText("Please make sure all combo boxes have a selection");
+                alert.showAndWait();
+                return;
+            }
+
+            int contactID = contacts.getContactID();
+            int customerID = customers.getCustomerID();
+            int userID = users.getUserID();
 
             LocalTime openHours = LocalTime.of(8, 0);
             LocalTime closedHours = LocalTime.of(22, 0);
 
             Appointments newAppointment = new Appointments(title, description, location, type, startTime, endTime, customerID, userID, contactID);
 
-
-            for (Appointments appointments : AppointmentsDAO.getAllAppointments()) {
-                if ((startTime.isEqual(appointments.getStartTime()) || startTime.isAfter(appointments.getStartTime()) && startTime.isBefore(appointments.getEndTime()))) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Scheduling Time Error");
-                    alert.setHeaderText("The time you have chosen for your appointment overlaps with others. Please choose a new appointment time.");
-                    alert.showAndWait();
-                    return;
-                }
-
-                if (startTime.toLocalTime().isBefore(openHours) || endTime.toLocalTime().isAfter(closedHours)) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Scheduling Time Error");
-                    alert.setHeaderText("The time you have chosen for your appointment isn't within business hours of 08:00 EST and 10:00 EST.");
-                    alert.showAndWait();
-                    return;
-                }
+            if (ValidAppointment.Overlapping(newAppointment)) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("The appointment overlaps with other existing appointments, please choose another time.");
+                alert.showAndWait();
             }
-            AppointmentsDAO.addAppointment(newAppointment);
 
-            Parent root = FXMLLoader.load(getClass().getResource("/view/Appointments.fxml"));
-            Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            System.out.println("root = " + root + " stage = " + stage + " scene = " + scene);
-            stage.setScene(scene);
-            stage.show();
+            if (!ValidAppointment.orgHours(newAppointment) && !ValidAppointment.Overlapping(newAppointment) && !ValidAppointment.startAfterEnd(newAppointment)) {
+
+                AppointmentsDAO.addAppointment(newAppointment);
+
+                Parent root = FXMLLoader.load(getClass().getResource("/view/Appointments.fxml"));
+                Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                System.out.println("root = " + root + " stage = " + stage + " scene = " + scene);
+                stage.setScene(scene);
+                stage.show();
+            }
         }
         catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    /*
+        try {
+            String title = apptTitleTextField.getText();
+            String description = apptDescTextField.getText();
+            String location = apptLocTextField.getText();
+            String type = apptTypeTextField.getText();
+
+            LocalDateTime startTime = getStartInfo();
+            LocalDateTime endTime = getEndInfo();
+
+            int contactID = contactComboBox.getSelectionModel().getSelectedItem().getContactID();
+            int customerID = customerIDComboBox.getSelectionModel().getSelectedItem().getCustomerID();
+            int userID = userIDComboBox.getSelectionModel().getSelectedItem().getUserID();
+
+            Appointments newAppointment = new Appointments(title, description, location, type, startTime, endTime, customerID, userID, contactID);
+
+            if (ValidAppointment.Overlapping(newAppointment)) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("OVERLAPPING");
+                alert.showAndWait();
+            }
+
+            if (!ValidAppointment.emptyFields(newAppointment) && !ValidAppointment.Overlapping(newAppointment) && !ValidAppointment.startAfterEnd(newAppointment)) {
+                AppointmentsDAO.addAppointment(newAppointment);
+
+                Parent root = FXMLLoader.load(getClass().getResource("/view/Appointments.fxml"));
+                Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                System.out.println("root = " + root + " stage = " + stage + " scene = " + scene);
+                stage.setScene(scene);
+                stage.show();
+            }
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+    */
+
     private LocalDateTime getStartInfo() {
         LocalDate startDate = startDatePicker.getValue();
         LocalTime startTime = startTimeComboBox.getValue();
-        return LocalDateTime.of(startDate, startTime);
+        LocalDateTime startDateTime = LocalDateTime.of(startDate, startTime);
+
+        return startDateTime;
     }
 
     private LocalDateTime getEndInfo() {
         LocalDate endDate = endDatePicker.getValue();
         LocalTime endTime = endTimeComboBox.getValue();
-        return  LocalDateTime.of(endDate, endTime);
+        LocalDateTime endDateTime = LocalDateTime.of(endDate, endTime);
+
+        return endDateTime;
     }
 
 

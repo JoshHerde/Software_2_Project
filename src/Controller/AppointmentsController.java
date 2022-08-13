@@ -158,8 +158,6 @@ public class AppointmentsController implements Initializable {
         stage.show();
     }
 
-    public void appointmentSearchClicked(ActionEvent actionEvent) {
-    }
 
         @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

@@ -117,8 +117,6 @@ public class CustomersController implements Initializable {
         stage.show();
     }
 
-    public void customersSearchClicked(ActionEvent actionEvent) {
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

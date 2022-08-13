@@ -34,9 +34,13 @@ public class Main extends Application {
 
 }
 
-//edit customer alert not working with empty fields
-//do i need an alert for empty country combo, if so where should i add it.
-// can i remove the search bars. doesnt say i need that
-//how to have country and division combos display in edit customer
+
+
+// todo fix reports. make them all in table view. for contact schedule put combo box on table view to switch between customers.
+// todo fix business hours. add to valid appointments utility.
+// todo make alert for empty date or time !!!!!!!!
+//when deleting customer, customer wont fully remove until i exit customer screen.
+//ask about reports controller
+
 
 

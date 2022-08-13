@@ -1,7 +1,11 @@
 package Controller;
 
+import DAO_DBAccess.AppointmentsDAO;
 import DAO_DBAccess.UsersDAO;
+import Model.Appointments;
 import Model.Users;
+import Utilities.LoginLog;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,10 +16,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
+import javax.swing.text.html.ObjectView;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -29,6 +36,8 @@ public class LoginController implements Initializable {
     @FXML private Label userZoneId;
     @FXML private Button loginButton;
     @FXML private Label errorMessageLabel;
+
+    public static DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("MM-dd-YYYY HH:mm");
 
     public static Users currentUser;
 
@@ -52,6 +61,8 @@ public class LoginController implements Initializable {
         }
         if (knownUser) {
             boolean isFound = true;
+            LoginLog.inputLog(username, true);
+            upcomingAppointment();
 
             Parent root = FXMLLoader.load(getClass().getResource("/view/Appointments.fxml"));
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -60,17 +71,42 @@ public class LoginController implements Initializable {
             stage.show();
 
         } else {
-
+            LoginLog.inputLog(username, false);
             errorMessageLabel.setVisible(true);
-
         }
-
-
-
     }
 
+    private void upcomingAppointment() throws SQLException {
+        try {
+            boolean upcomingAppointment = false;
+            ObservableList<Appointments> dataBaseAppts = AppointmentsDAO.getAllAppointments();
+            LocalDateTime now = LocalDateTime.now();
+            int currentUserID = currentUser.getUserID();
 
+            for (Appointments appointments : dataBaseAppts) {
+                LocalDateTime startTime = appointments.getStartTime();
 
+                if ((appointments.getUserID() == currentUserID) && startTime.isAfter(now) && startTime.isBefore(now.plusMinutes(15))) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Just be aware...");
+                    alert.setHeaderText("Your appointment with ID: " + appointments.getAppointmentID() + " is starting at " + startTime.format(dateTimeFormat) + ".");
+                    alert.showAndWait();
+
+                    upcomingAppointment = true;
+                    break;
+                }
+            }
+            if (!upcomingAppointment) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Just be aware...");
+                alert.setHeaderText("You have no appointments anytime soon!");
+                alert.showAndWait();
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

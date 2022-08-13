@@ -44,7 +44,6 @@
       </Button>
       <Button layoutX="744.0" layoutY="45.0" mnemonicParsing="false" onAction="#editAppointmentClicked" prefHeight="25.0" prefWidth="143.0" text="Edit Appointment" />
       <Button layoutX="744.0" layoutY="84.0" mnemonicParsing="false" onAction="#deleteAppointmentClicked" prefHeight="25.0" prefWidth="143.0" text="Delete Appointment" />
-      <TextField fx:id="searchTextField" layoutX="33.0" layoutY="84.0" onAction="#appointmentSearchClicked" prefHeight="25.0" prefWidth="456.0" promptText="Search..." />
       <Button layoutX="1019.0" layoutY="561.0" mnemonicParsing="false" onAction="#exitButtonClicked" prefHeight="25.0" prefWidth="53.0" text="Exit" />
       <Button layoutX="33.0" layoutY="558.0" mnemonicParsing="false" onAction="#customerButtonClicked" prefHeight="25.0" prefWidth="143.0" style="-fx-background-color: #b7ffbf; -fx-border-color: black;" text="Customers">
          <font>

@@ -49,12 +49,8 @@ public class EditCustomerController implements Initializable {
             String address = addressTextField.getText();
             String postalCode = postalCodeTextField.getText();
             String phone = phoneTextField.getText();
-            int divisionID = divisionComboBox.getSelectionModel().getSelectedItem().getDivisionID();
 
-            Customers newCustomer = new Customers(name, address, postalCode, phone, divisionID);
-            newCustomer.setCustomerID(selectedCustomer.getCustomerID());
-
-            if (nameTextField.getText().isBlank() && addressTextField.getText().isBlank() && postalCodeTextField.getText().isBlank() && phoneTextField.getText().isBlank()) {
+            if (nameTextField.getText().isBlank() || addressTextField.getText().isBlank() || postalCodeTextField.getText().isBlank() || phoneTextField.getText().isBlank()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Empty Text Fields");
                 alert.setHeaderText("Please fill in all text fields.");
@@ -62,9 +58,13 @@ public class EditCustomerController implements Initializable {
                 return;
             }
 
-            //Customers newCustomer = new Customers(name, address, postalCode, phone, divisionID);
-            //newCustomer.setCustomerID(selectedCustomer.getCustomerID());
+            int divisionID = divisionComboBox.getSelectionModel().getSelectedItem().getDivisionID();
 
+            Customers newCustomer = new Customers(name, address, postalCode, phone, divisionID);
+            newCustomer.setCustomerID(selectedCustomer.getCustomerID());
+
+
+            //newCustomer.setCustomerID(selectedCustomer.getCustomerID());
             CustomersDAO.editCustomer(newCustomer);
 
             Parent root = FXMLLoader.load(getClass().getResource("/view/Customers.fxml"));
@@ -76,7 +76,6 @@ public class EditCustomerController implements Initializable {
         catch (IOException | SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     @FXML void cancelButtonClicked(ActionEvent actionEvent) throws IOException {
@@ -116,9 +115,6 @@ public class EditCustomerController implements Initializable {
         addressTextField.setText(selectedCustomer.getAddress());
         postalCodeTextField.setText(selectedCustomer.getPostalCode());
         phoneTextField.setText(selectedCustomer.getPhone());
-
-
-
 
         try {
             Divisions selectedDivision = DivisionsDAO.getByID(selectedCustomer.getDivisionID());

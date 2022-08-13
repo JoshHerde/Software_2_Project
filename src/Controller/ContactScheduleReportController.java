@@ -1,7 +1,9 @@
 package Controller;
 
 import DAO_DBAccess.AppointmentsDAO;
+import DAO_DBAccess.ContactsDAO;
 import Model.Appointments;
+import Model.Contacts;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -33,13 +35,14 @@ public class ContactScheduleReportController implements Initializable {
     @FXML private TableColumn<Appointments, Integer> customerIdColumn;
 
 
-    public void backButtonClicked(ActionEvent actionEvent) throws IOException {
+    @FXML void backButtonClicked(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/View/Reports.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

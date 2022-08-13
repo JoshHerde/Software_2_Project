@@ -37,11 +37,11 @@ public class CountriesDAO {
     public static Countries getByID(int dbCountryID) {
 
         try {
-            String sql = "SELECT * FROM country WHERE Country_ID = ?";
+            String sql = "SELECT * FROM countries WHERE Country_ID = ?";
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
 
             ps.setInt(1, dbCountryID);
-            ps.execute();
+            ps.executeQuery();
             ResultSet rs = ps.getResultSet();
 
             rs.next();

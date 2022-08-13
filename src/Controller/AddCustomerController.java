@@ -43,15 +43,26 @@ public class AddCustomerController implements Initializable {
             String address = addressTextField.getText();
             String postalCode = postalCodeTextField.getText();
             String phone = phoneTextField.getText();
-            int divisionID = divisionComboBox.getSelectionModel().getSelectedItem().getDivisionID();
 
-            if (nameTextField.getText().isEmpty() && addressTextField.getText().isEmpty() && postalCodeTextField.getText().isEmpty() && phoneTextField.getText().isEmpty()) {
+            if (nameTextField.getText().isEmpty() || addressTextField.getText().isEmpty() || postalCodeTextField.getText().isEmpty() || phoneTextField.getText().isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Empty Text Fields");
                 alert.setHeaderText("Please fill in all text fields.");
                 alert.showAndWait();
                 return;
             }
+
+            Divisions divisions = divisionComboBox.getValue();
+
+            if (divisions == null) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Empty Country or Division combo box");
+                alert.setHeaderText("Please make sure all combo boxes have a selection");
+                alert.showAndWait();
+                return;
+            }
+
+            int divisionID = divisions.getDivisionID();
 
             Customers newCustomer = new Customers(name, address, postalCode, phone, divisionID);
             CustomersDAO.addCustomer(newCustomer);
