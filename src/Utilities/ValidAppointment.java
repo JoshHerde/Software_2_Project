@@ -127,5 +127,4 @@ public class ValidAppointment {
         return orgClosed;
     }
 
-    // todo CREATE BUSINESS HOURS
 }

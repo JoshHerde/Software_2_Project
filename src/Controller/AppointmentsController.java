@@ -89,12 +89,13 @@ public class AppointmentsController implements Initializable {
             alert.showAndWait();
 
         }
-        Parent root = FXMLLoader.load(getClass().getResource("/View/EditAppointment.fxml"));
-        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-
+        else {
+            Parent root = FXMLLoader.load(getClass().getResource("/View/EditAppointment.fxml"));
+            Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 
     @FXML void deleteAppointmentClicked(ActionEvent actionEvent) {

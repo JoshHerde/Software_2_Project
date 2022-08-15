@@ -6,15 +6,14 @@ public class TypeMonthReport {
 
     private String apptType;
 
-    private Month month;
+    private String month;
 
     private int total;
 
     public TypeMonthReport() {
-
     }
 
-    public TypeMonthReport(String apptType, Month month, int total) {
+    public TypeMonthReport(String apptType, String month, int total) {
         this.apptType = apptType;
         this.month = month;
         this.total = total;
@@ -29,11 +28,11 @@ public class TypeMonthReport {
     }
 
 
-    public Month getMonth() {
+    public String getMonth() {
         return month;
     }
 
-    public void setMonth(Month month) {
+    public void setMonth(String month) {
         this.month = month;
     }
 

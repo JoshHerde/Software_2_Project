@@ -35,31 +35,36 @@ public class ContactsDAO {
         return contactList;
     }
 
-    /*
-
-    public static void addContact(Contacts contacts) {
-        try {
-            String sql = "INSERT INTO contacts (Contact_Name, Email) VALUES(?, ?)";
-            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
-
-            ps.setString(1, contacts.getContactName());
-            ps.setString(2, contacts.getContactEmail());
-
-            ps.executeUpdate();
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    */
-
-    public static Contacts getContactByID(int theContactID) throws SQLException {
+    public static Contacts getContactNameByID(int theContactID) throws SQLException {
 
         String sql = "SELECT * FROM contacts WHERE Contact_ID = ?";
         PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
 
         ps.setInt(1, theContactID);
+        ps.executeQuery();
+
+        try {
+            ResultSet rs = ps.getResultSet();
+            while (rs.next()) {
+                int contactID = rs.getInt("Contact_ID");
+                String contactName = rs.getString("Contact_Name");
+                String contactEmail = rs.getString("Email");
+                Contacts newContact = new Contacts(contactID, contactName, contactEmail);
+                return newContact;
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static Contacts getContactByID(String nameOfContact) throws SQLException {
+
+        String sql = "SELECT * FROM contacts WHERE Contact_Name = ?";
+        PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+
+        ps.setString(1, nameOfContact);
         ps.executeQuery();
 
         try {

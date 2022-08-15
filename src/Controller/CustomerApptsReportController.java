@@ -1,9 +1,9 @@
 package Controller;
 
 import DAO_DBAccess.AppointmentsDAO;
-import DAO_DBAccess.ContactsDAO;
-import Model.Appointments;
-import Model.Contacts;
+import DAO_DBAccess.CountriesDAO;
+import DAO_DBAccess.CustomersDAO;
+import Model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,11 +25,10 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class ContactScheduleReportController implements Initializable {
+public class CustomerApptsReportController implements Initializable {
 
 
-
-    @FXML private TableView<Appointments> contactTable;
+    @FXML private TableView<Appointments> customerTable;
     @FXML private TableColumn<Appointments, Integer> IdColumn;
     @FXML private TableColumn<Appointments, String> titleColumn;
     @FXML private TableColumn<Appointments, String> typeColumn;
@@ -37,7 +36,7 @@ public class ContactScheduleReportController implements Initializable {
     @FXML private TableColumn<Appointments, String> startColumn;
     @FXML private TableColumn<Appointments, String> endColumn;
     @FXML private TableColumn<Appointments, Integer> customerIdColumn;
-    @FXML private ComboBox<Contacts> contactComboBox;
+    @FXML private ComboBox<Customers> customerComboBox;
 
 
 
@@ -49,9 +48,10 @@ public class ContactScheduleReportController implements Initializable {
         stage.show();
     }
 
-    @FXML void contactComboClicked(ActionEvent actionEvent) throws SQLException {
-        Contacts selectedContact = (Contacts) contactComboBox.getSelectionModel().getSelectedItem();
-        ObservableList<Appointments> contactAppointments = AppointmentsDAO.getAllByContact(selectedContact.getContactID());
+    @FXML void customerComboClicked(ActionEvent actionEvent) throws SQLException {
+
+        Customers selectedCustomer = (Customers) customerComboBox.getSelectionModel().getSelectedItem();
+        ObservableList<Appointments> customerAppointments = AppointmentsDAO.getAllByCustomer(selectedCustomer.getCustomerID());
 
         IdColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -61,25 +61,23 @@ public class ContactScheduleReportController implements Initializable {
         endColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
         customerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerID"));
 
-        if (contactAppointments.isEmpty()) {
-            contactTable.setItems(null);
+        if (customerAppointments.isEmpty()) {
+            customerTable.setItems(null);
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("INFORMATION");
-            alert.setHeaderText("This Contact doesn't have anything scheduled.");
+            alert.setHeaderText("This Customer doesn't have any appointments.");
             alert.showAndWait();
-
         }
         else {
-            contactTable.setItems(contactAppointments);
+            customerTable.setItems(customerAppointments);
         }
     }
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        contactComboBox.setItems(ContactsDAO.getAllContacts());
+        customerComboBox.setItems(CustomersDAO.getAllCustomers());
 
     }
 }

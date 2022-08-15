@@ -11,11 +11,6 @@ import java.sql.*;
 
 public class UsersDAO {
 
-    public static Users currentUser;
-
-    public static Users getCurrentUser() {
-        return currentUser;
-    }
 
 
     public static ObservableList<Users> getAllUsers() {
@@ -41,7 +36,7 @@ public class UsersDAO {
         return usersList;
     }
 
-    public static boolean checkForUser(String username, String password) throws SQLException {
+    public static Users checkForUser(String username, String password) throws SQLException {
 
         try {
             String sql = "SELECT * FROM users WHERE User_Name = ? AND Password = ?";
@@ -53,21 +48,17 @@ public class UsersDAO {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                currentUser = new Users();
+                Users currentUser = new Users();
+                currentUser.setUserID(rs.getInt("User_ID"));
                 currentUser.setUserName(rs.getString("User_Name"));
                 currentUser.setPassword(rs.getString("Password"));
-                LoginLog.inputLog(username, true);
-                return true;
-            }
-            else {
-                LoginLog.inputLog(username, false);
-                return false;
+                return currentUser;
             }
         }
         catch (SQLException ex) {
             ex.printStackTrace();
-            return false;
         }
+        return null;
     }
 
     public static Users getUserByID(int theUserID) throws SQLException {

@@ -63,9 +63,6 @@ public class AddAppointmentController implements Initializable {
             String location = apptLocTextField.getText();
             String type = apptTypeTextField.getText();
 
-            LocalDateTime startTime = getStartInfo();
-            LocalDateTime endTime = getEndInfo();
-
             if (apptTitleTextField.getText().isBlank() || apptDescTextField.getText().isBlank() || apptLocTextField.getText().isBlank() || apptTypeTextField.getText().isBlank()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Empty Text Field");
@@ -73,6 +70,18 @@ public class AddAppointmentController implements Initializable {
                 alert.showAndWait();
                 return;
             }
+
+            if (startDatePicker.getValue() == null || startTimeComboBox.getValue() == null || endDatePicker.getValue() == null || endTimeComboBox.getValue() == null) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Date and/or time slots are empty.");
+                alert.setHeaderText("Please fill in all Date and Time slots.");
+                alert.showAndWait();
+                return;
+            }
+
+            LocalDateTime startTime = getStartInfo();
+            LocalDateTime endTime = getEndInfo();
+
 
             Contacts contacts = contactComboBox.getValue();
             Customers customers = customerIDComboBox.getValue();
@@ -102,8 +111,7 @@ public class AddAppointmentController implements Initializable {
                 alert.showAndWait();
             }
 
-            if (!ValidAppointment.orgHours(newAppointment) && !ValidAppointment.Overlapping(newAppointment) && !ValidAppointment.startAfterEnd(newAppointment)) {
-
+            if (!ValidAppointment.startAfterEnd(newAppointment) && !ValidAppointment.orgHours(newAppointment) && !ValidAppointment.Overlapping(newAppointment)) {
                 AppointmentsDAO.addAppointment(newAppointment);
 
                 Parent root = FXMLLoader.load(getClass().getResource("/view/Appointments.fxml"));
@@ -113,6 +121,7 @@ public class AddAppointmentController implements Initializable {
                 stage.setScene(scene);
                 stage.show();
             }
+
         }
         catch (Exception e) {
             e.printStackTrace();

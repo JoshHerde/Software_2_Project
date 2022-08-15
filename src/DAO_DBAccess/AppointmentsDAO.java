@@ -1,6 +1,7 @@
 package DAO_DBAccess;
 
 import Model.Appointments;
+import Model.TypeMonthReport;
 import Model.Users;
 import Utilities.DBConnection;
 import javafx.collections.FXCollections;
@@ -134,7 +135,7 @@ public class AppointmentsDAO {
             ps.setInt(8, appointments.getUserID());
             ps.setInt(9, appointments.getContactID());
             System.out.println(ps.toString());
-            ps.executeUpdate();
+            ps.execute();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -144,8 +145,8 @@ public class AppointmentsDAO {
 
     public static void editAppointment(Appointments appointments) {
         try {
-            String sql = "UPDATE appointments SET (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) " +
-                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) WHERE Appointment_ID = ?";
+            String sql = "UPDATE appointments SET Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?," +
+                    " Customer_ID = ?, User_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?";
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
 
             ps.setString(1, appointments.getTitle());
@@ -158,8 +159,7 @@ public class AppointmentsDAO {
             ps.setInt(8, appointments.getUserID());
             ps.setInt(9, appointments.getContactID());
             ps.setInt(10, appointments.getAppointmentID());
-
-            ps.executeUpdate();
+            ps.execute();
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -178,12 +178,13 @@ public class AppointmentsDAO {
             ex.printStackTrace();
         }
     }
-    public static ObservableList<Appointments> getAllByContact() {
+    public static ObservableList<Appointments> getAllByContact(int contactId) throws SQLException {
         ObservableList<Appointments> allByContact = FXCollections.observableArrayList();
 
         try {
-            String sql = "SELECT * from appointments ORDER BY Contact_ID, Start";
+            String sql = "SELECT * from appointments WHERE Contact_ID = ?";
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+            ps.setInt(1, contactId);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -201,12 +202,67 @@ public class AppointmentsDAO {
                         startTime, endTime, customerID, userID, contactID);
                 allByContact.add(newAppointment);
             }
+            return allByContact;
         }
         catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return allByContact;
-
+        return null;
     }
 
+    public static ObservableList<Appointments> getAllByCustomer(int customerId) throws SQLException {
+        ObservableList<Appointments> allByCustomer = FXCollections.observableArrayList();
+
+        try {
+            String sql = "SELECT * from appointments WHERE Customer_ID = ?";
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+            ps.setInt(1, customerId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int appointmentID = rs.getInt("Appointment_ID");
+                String title = rs.getString("Title");
+                String description = rs.getString("Description");
+                String location = rs.getString("Location");
+                String type = rs.getString("Type");
+                LocalDateTime startTime = rs.getTimestamp("Start").toLocalDateTime();
+                LocalDateTime endTime = rs.getTimestamp("End").toLocalDateTime();
+                int customerID = rs.getInt("Customer_ID");
+                int userID = rs.getInt("User_ID");
+                int contactID = rs.getInt("Contact_ID");
+                Appointments newAppointment = new Appointments(appointmentID, title, description, location, type,
+                        startTime, endTime, customerID, userID, contactID);
+                allByCustomer.add(newAppointment);
+            }
+            return allByCustomer;
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public static ObservableList<TypeMonthReport> getByTypeMonth() {
+        ObservableList<TypeMonthReport> allAppointments = FXCollections.observableArrayList();
+
+        try {
+            String sql = "SELECT Type, monthname(start), COUNT(*) FROM appointments GROUP BY Type, monthname(start) ORDER BY Type;";
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String apptType = rs.getString("Type");
+                String month = rs.getString("monthname(start)");
+                int total = rs.getInt("COUNT(*)");
+
+                TypeMonthReport typeMonthReport = new TypeMonthReport(apptType, month, total);
+                allAppointments.add(typeMonthReport);
+            }
+            return allAppointments;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

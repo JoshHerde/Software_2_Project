@@ -29,7 +29,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class EditAppointmentController implements Initializable {
@@ -111,7 +110,7 @@ public class EditAppointmentController implements Initializable {
                 alert.showAndWait();
             }
 
-            if (!ValidAppointment.orgHours(newAppointment) && !ValidAppointment.Overlapping(newAppointment) && !ValidAppointment.startAfterEnd(newAppointment)) {
+            if (!ValidAppointment.startAfterEnd(newAppointment) && !ValidAppointment.orgHours(newAppointment) && !ValidAppointment.Overlapping(newAppointment)) {
 
                 AppointmentsDAO.editAppointment(newAppointment);
 
@@ -121,6 +120,7 @@ public class EditAppointmentController implements Initializable {
                 System.out.println("root = " + root + " stage = " + stage + " scene = " + scene);
                 stage.setScene(scene);
                 stage.show();
+
             }
         }
         catch (Exception e) {
@@ -162,7 +162,7 @@ public class EditAppointmentController implements Initializable {
         try {
             contactList = ContactsDAO.getAllContacts();
             contactComboBox.setItems(contactList);
-            selectedContact = ContactsDAO.getContactByID(selectedAppointment.getContactID());
+            selectedContact = ContactsDAO.getContactNameByID(selectedAppointment.getContactID());
             contactComboBox.setValue(selectedContact);
 
             customersList = CustomersDAO.getAllCustomers();

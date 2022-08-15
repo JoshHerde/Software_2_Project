@@ -64,7 +64,6 @@ public class EditCustomerController implements Initializable {
             newCustomer.setCustomerID(selectedCustomer.getCustomerID());
 
 
-            //newCustomer.setCustomerID(selectedCustomer.getCustomerID());
             CustomersDAO.editCustomer(newCustomer);
 
             Parent root = FXMLLoader.load(getClass().getResource("/view/Customers.fxml"));

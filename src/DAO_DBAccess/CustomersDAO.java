@@ -18,7 +18,6 @@ public class CustomersDAO {
         ObservableList<Customers> customersList = FXCollections.observableArrayList();
 
         try {
-            //String sql = "SELECT * from customers AS c INNER JOIN first_level_divisions AS d ON c.Division_ID = d.Division_ID INNER JOIN countries AS co ON co.country_ID = d.Country_ID ";
             String sql = "SELECT customers.Customer_ID, customers.Customer_Name, customers.Address, customers.Postal_Code, customers.Phone, countries.Country, first_level_divisions.Division,customers.Division_ID, countries.Country_ID FROM customers INNER JOIN first_level_divisions ON first_level_divisions.Division_ID = customers.Division_ID INNER JOIN countries ON first_level_divisions.Country_ID = countries.Country_ID";
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
             ps.executeQuery();

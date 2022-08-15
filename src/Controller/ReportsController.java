@@ -1,11 +1,5 @@
 package Controller;
 
-import DAO_DBAccess.AppointmentsDAO;
-import DAO_DBAccess.CustomersDAO;
-import Model.Appointments;
-import Model.Customers;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,8 +12,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.ResourceBundle;
 
 public class ReportsController implements Initializable {
@@ -62,8 +54,12 @@ public class ReportsController implements Initializable {
 
     }
 
-    @FXML void goButton3Clicked(ActionEvent actionEvent) {
-
+    @FXML void goButton3Clicked(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/View/CustomerApptsReport.fxml"));
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @Override

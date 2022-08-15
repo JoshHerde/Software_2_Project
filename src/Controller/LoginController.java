@@ -37,9 +37,9 @@ public class LoginController implements Initializable {
     @FXML private Button loginButton;
     @FXML private Label errorMessageLabel;
 
-    public static DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("MM-dd-YYYY HH:mm");
+    public static final DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("MM-dd-YYYY HH:mm");
 
-    public static Users currentUser;
+    private static Users currentUser;
 
     public static Users getCurrentUser() {
         return currentUser;
@@ -50,7 +50,7 @@ public class LoginController implements Initializable {
         String username = usernameTextField.getText();
         String password = passwordTextField.getText();
 
-        boolean knownUser = UsersDAO.checkForUser(username, password);
+        currentUser = UsersDAO.checkForUser(username, password);
 
 
         if (username.isEmpty() || password.isEmpty()) {
@@ -59,8 +59,7 @@ public class LoginController implements Initializable {
             alert.setHeaderText("Please enter Username and/or Password");
             alert.showAndWait();
         }
-        if (knownUser) {
-            boolean isFound = true;
+        if (currentUser != null) {
             LoginLog.inputLog(username, true);
             upcomingAppointment();
 
