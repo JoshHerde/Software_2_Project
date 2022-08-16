@@ -128,45 +128,6 @@ public class AddAppointmentController implements Initializable {
         }
     }
 
-    /*
-        try {
-            String title = apptTitleTextField.getText();
-            String description = apptDescTextField.getText();
-            String location = apptLocTextField.getText();
-            String type = apptTypeTextField.getText();
-
-            LocalDateTime startTime = getStartInfo();
-            LocalDateTime endTime = getEndInfo();
-
-            int contactID = contactComboBox.getSelectionModel().getSelectedItem().getContactID();
-            int customerID = customerIDComboBox.getSelectionModel().getSelectedItem().getCustomerID();
-            int userID = userIDComboBox.getSelectionModel().getSelectedItem().getUserID();
-
-            Appointments newAppointment = new Appointments(title, description, location, type, startTime, endTime, customerID, userID, contactID);
-
-            if (ValidAppointment.Overlapping(newAppointment)) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("OVERLAPPING");
-                alert.showAndWait();
-            }
-
-            if (!ValidAppointment.emptyFields(newAppointment) && !ValidAppointment.Overlapping(newAppointment) && !ValidAppointment.startAfterEnd(newAppointment)) {
-                AppointmentsDAO.addAppointment(newAppointment);
-
-                Parent root = FXMLLoader.load(getClass().getResource("/view/Appointments.fxml"));
-                Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
-                Scene scene = new Scene(root);
-                System.out.println("root = " + root + " stage = " + stage + " scene = " + scene);
-                stage.setScene(scene);
-                stage.show();
-            }
-        } catch (SQLException | IOException e) {
-            e.printStackTrace();
-        }
-    }
-    */
-
     private LocalDateTime getStartInfo() {
         LocalDate startDate = startDatePicker.getValue();
         LocalTime startTime = startTimeComboBox.getValue();

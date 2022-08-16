@@ -7,7 +7,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -15,17 +14,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ReportsController implements Initializable {
-
-
-    @FXML private RadioButton typeRadioButton;
-    @FXML private RadioButton monthRadioButton;
-    @FXML private ToggleGroup TypeMonthToggleGroup;
-    @FXML private Button GoButton1;
-
-    @FXML private Button GoButton2;
-
-    @FXML private Button GoButton3;
-
 
     @FXML void backButtonClicked(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/View/Appointments.fxml"));

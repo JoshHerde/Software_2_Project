@@ -85,7 +85,7 @@ public class CustomersController implements Initializable {
 
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 try {
-                    CustomersDAO.deleteCustomer(selectedCustomer.getCustomerID());
+                    //CustomersDAO.deleteCustomer(selectedCustomer.getCustomerID());
                     ObservableList<Appointments> apptList = AppointmentsDAO.getAllAppointments();
                     for (Appointments appointments : apptList) {
                         if (appointments.getCustomerID() == selectedCustomer.getCustomerID()) {
@@ -102,7 +102,7 @@ public class CustomersController implements Initializable {
                 alert1.setHeaderText(selectedCustomer.getName() + " and all of their appointments have been removed from our database.");
                 alert1.showAndWait();
 
-
+                customersTable.setItems(CustomersDAO.getAllCustomers());
             }
         }
 

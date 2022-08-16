@@ -1,6 +1,7 @@
 package Utilities;
 
 
+import Controller.LoginController;
 import DAO_DBAccess.UsersDAO;
 import Model.Users;
 
@@ -8,11 +9,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class LoginLog {
 
     static Users currentUser;
+    static ZoneId utcID = ZoneId.of("UTC");
+    //static DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("On 'MM-dd-yyyy' at 'HH:mm' , ");
 
 
     public LoginLog() {
@@ -20,19 +25,22 @@ public class LoginLog {
 
     public static void inputLog(String username, boolean successful) {
 
+        LocalDateTime nowUTC = LocalDateTime.now(utcID);
+        ZonedDateTime zoneUTC = nowUTC.atZone(utcID);
+        String dateTime = zoneUTC.toString() + " " + username;
+
 
         try {
             FileWriter fw = new FileWriter("login_activity.txt", true);
             PrintWriter pw = new PrintWriter(fw);
-            // timezone convert to UTC
-            String methods = ZonedDateTime.now().toString() + " " + username;
+            currentUser = LoginController.getCurrentUser();
             if (successful) {
-                methods += " Successfully logged in.";
+                dateTime += " successfully logged in.";
             }
             else {
-                methods += " was denied access";
+                dateTime += " was denied access";
             }
-            pw.println(methods);
+            pw.println(dateTime);
         }
         catch (IOException e) {
             System.out.println(e.getMessage());
@@ -40,5 +48,4 @@ public class LoginLog {
     }
 }
 
-// todo convert local time to UTC then print that time.
-//
+

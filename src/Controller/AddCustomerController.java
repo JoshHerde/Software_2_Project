@@ -94,18 +94,20 @@ public class AddCustomerController implements Initializable {
             ObservableList<Divisions> databaseDivisions = DivisionsDAO.getAllDivisions();
             ObservableList<Divisions> countryDivisions = FXCollections.observableArrayList();
 
-            for (Divisions divisions : databaseDivisions) {
+            //for (Divisions divisions : databaseDivisions) {
+            // Used Lambda expression to set values in country and division combo box.
+            databaseDivisions.forEach( divisions -> {
                 if (divisions.getCountryID() == selectedCountry.getCountryID()) {
                     countryDivisions.add(divisions);
                 }
-            }
+            });
             divisionComboBox.setItems(countryDivisions);
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
+/*
     public boolean customerValid() {
         if (nameTextField.getText().isEmpty() || addressTextField.getText().isEmpty() || postalCodeTextField.getText().isEmpty() || phoneTextField.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -123,6 +125,8 @@ public class AddCustomerController implements Initializable {
         }
         return true;
     }
+
+ */
 
 
     @Override

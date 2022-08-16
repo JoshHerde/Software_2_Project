@@ -4,6 +4,7 @@ import DAO_DBAccess.AppointmentsDAO;
 import DAO_DBAccess.CountriesDAO;
 import DAO_DBAccess.CustomersDAO;
 import Model.*;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

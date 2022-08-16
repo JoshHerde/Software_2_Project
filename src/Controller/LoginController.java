@@ -16,7 +16,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import javax.swing.text.html.ObjectView;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -37,7 +36,7 @@ public class LoginController implements Initializable {
     @FXML private Button loginButton;
     @FXML private Label errorMessageLabel;
 
-    public static final DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("MM-dd-YYYY HH:mm");
+    public static final DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
 
     private static Users currentUser;
 
@@ -88,7 +87,7 @@ public class LoginController implements Initializable {
                 if ((appointments.getUserID() == currentUserID) && startTime.isAfter(now) && startTime.isBefore(now.plusMinutes(15))) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Just be aware...");
-                    alert.setHeaderText("Your appointment with ID: " + appointments.getAppointmentID() + " is starting at " + startTime.format(dateTimeFormat) + ".");
+                    alert.setHeaderText("Your appointment with ID: " + appointments.getAppointmentID() + " is starting at " + startTime.format(timeFormat) + ".");
                     alert.showAndWait();
 
                     upcomingAppointment = true;

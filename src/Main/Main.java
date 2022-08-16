@@ -7,9 +7,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.util.Locale;
 import java.util.Objects;
-import java.util.ResourceBundle;
+
 
 
 public class Main extends Application {
@@ -36,8 +35,7 @@ public class Main extends Application {
 
 
 
-// todo save on edit customer not working.
-// todo when deleting customer, wont fully delete until i exit screen.
+
 
 
 
