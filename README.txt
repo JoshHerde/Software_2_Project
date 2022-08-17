@@ -21,8 +21,7 @@ How to use the program:
 
 
 Additional report in part A3f: My additional report I chose to generate was a report that shows all appointments for a specific customer.
-                               There is a drop down box in the report, from that you can choose any customer in the application to view
-                               all of their appointments.
+There is a drop down box in the report, from that you can choose any customer in the application to view all of their appointments.
 
 MySQL Connector: mysql-connector-java-8.0.29
 
