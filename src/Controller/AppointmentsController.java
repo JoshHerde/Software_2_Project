@@ -22,13 +22,14 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.function.Predicate;
 
+
+/**
+ * The Appointments FXML Controller class.
+ */
 public class AppointmentsController implements Initializable {
 
 
@@ -48,11 +49,11 @@ public class AppointmentsController implements Initializable {
     @FXML private RadioButton allRadioButton;
     @FXML private  RadioButton monthRadioButton;
     @FXML private  RadioButton weekRadioButton;
-    @FXML private  TextField searchTextField;
 
-    public static ObservableList<Appointments> allAppointments;
-    public static ObservableList<Customers> allCustomers;
 
+    /**
+     * The appointment selected to modify.
+     */
     private static Appointments selectedAppointment;
 
     public static Appointments getSelectedAppointment() {
@@ -60,18 +61,39 @@ public class AppointmentsController implements Initializable {
     }
 
 
+    /**
+     * Sets table to view all appointments.
+     *
+     * @param actionEvent All radio button action.
+     */
     @FXML void allRbClicked(ActionEvent actionEvent) {
         appointmentsTable.setItems(AppointmentsDAO.getAllAppointments());
     }
 
+    /**
+     * Sets table to view appointments for that month.
+     *
+     * @param actionEvent Month radio button action.
+     */
     @FXML void monthRbClicked(ActionEvent actionEvent) {
         appointmentsTable.setItems(AppointmentsDAO.getMonthlyAppointments());
     }
 
+    /**
+     * Sets table to view appointments for that week.
+     *
+     * @param actionEvent Week radio button action.
+     */
     @FXML void weekRbClicked(ActionEvent actionEvent) {
         appointmentsTable.setItems(AppointmentsDAO.getWeeklyAppointments());
     }
 
+    /**
+     * Loads AddAppointmentController.
+     *
+     * @param actionEvent Add new appointment button action.
+     * @throws IOException from FXMLLoader.
+     */
     @FXML void newAppointmentClicked(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/View/AddAppointment.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
@@ -80,6 +102,12 @@ public class AppointmentsController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Loads EditAppointmentController.
+     *
+     * @param actionEvent Edit appointment button action.
+     * @throws IOException from FXMLLoader.
+     */
     @FXML void editAppointmentClicked(ActionEvent actionEvent) throws IOException{
         selectedAppointment = appointmentsTable.getSelectionModel().getSelectedItem();
 
@@ -99,6 +127,11 @@ public class AppointmentsController implements Initializable {
         }
     }
 
+    /**
+     * Deletes selected appointment from table.
+     *
+     * @param actionEvent delete appointment button action.
+     */
     @FXML void deleteAppointmentClicked(ActionEvent actionEvent) {
         selectedAppointment = appointmentsTable.getSelectionModel().getSelectedItem();
 
@@ -140,10 +173,21 @@ public class AppointmentsController implements Initializable {
         }
     }
 
+    /**
+     * Exits the program.
+     *
+     * @param actionEvent Exit button action.
+     */
     @FXML void exitButtonClicked(ActionEvent actionEvent) {
         System.exit(0);
     }
 
+    /**
+     * Loads the CustomerController.
+     *
+     * @param actionEvent Customers button action.
+     * @throws IOException from FXMLLoader.
+     */
     @FXML void customerButtonClicked(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/View/Customers.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
@@ -152,6 +196,12 @@ public class AppointmentsController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Loads the ReportsController.
+     *
+     * @param actionEvent Reports button action.
+     * @throws IOException from FXMLLoader.
+     */
     @FXML void reportsButtonClicked(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/View/Reports.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
@@ -161,7 +211,13 @@ public class AppointmentsController implements Initializable {
     }
 
 
-        @Override
+    /**
+     * Initializes the controller.
+     *
+     * @param url The location used to resolve relative paths for the root object.
+     * @param resourceBundle The resources used to localize the root object.
+     */
+    @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         appointmentsTable.setItems(AppointmentsDAO.getAllAppointments());
         idCol.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));

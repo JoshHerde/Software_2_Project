@@ -9,8 +9,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * DAO class that accesses the database Divisions table.
+ */
 public class DivisionsDAO {
 
+    /**
+     * Gets all divisions from the database.
+     *
+     * @return all divisions.
+     * @throws SQLException from DBConnection.
+     */
     public static ObservableList<Divisions> getAllDivisions() throws SQLException {
 
         ObservableList<Divisions> divisionsList = FXCollections.observableArrayList();
@@ -35,6 +44,13 @@ public class DivisionsDAO {
         return divisionsList;
     }
 
+    /**
+     * Gets a specific division with matching ID.
+     *
+     * @param dbDivisionID the division ID.
+     * @return the specific division with matching ID.
+     * @throws SQLException from DBConnection.
+     */
     public static Divisions getByID(int dbDivisionID) throws SQLException {
 
         Divisions divisions = new Divisions();
@@ -57,25 +73,5 @@ public class DivisionsDAO {
             e.printStackTrace();
             }
         return divisions;
-    }
-
-    public static int getDivisionID(String selectedDivision) throws SQLException {
-        String sql = "SELECT * FROM first_level_divisions WHERE Division = ?";
-        PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
-        ps.setString(1, selectedDivision);
-
-        try {
-            ps.execute();
-            ResultSet rs = ps.getResultSet();
-            while (rs.next()) {
-                return rs.getInt("Division_ID");
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Didn't get ID");
-            return -1;
-        }
-        return -1;
     }
 }

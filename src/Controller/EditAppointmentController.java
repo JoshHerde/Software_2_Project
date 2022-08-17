@@ -31,9 +31,10 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
+/**
+ * The EditAppointment FXML Controller class.
+ */
 public class EditAppointmentController implements Initializable {
-
-
 
     @FXML private TextField apptIdTextField;
     @FXML private  TextField apptTitleTextField;
@@ -48,16 +49,27 @@ public class EditAppointmentController implements Initializable {
     @FXML private ComboBox<Customers> customerIDComboBox;
     @FXML private ComboBox<Users> userIDComboBox;
 
+    /**
+     * Gets all the selected objects.
+     */
     public Contacts selectedContact;
     public Customers selectedCustomer;
     public Users selectedUser;
     public Appointments selectedAppointment;
 
-    private DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+    /**
+     * Lists for combo boxes.
+     */
     private ObservableList<Contacts> contactList = FXCollections.observableArrayList();
     private ObservableList<Customers> customersList = FXCollections.observableArrayList();
     private ObservableList<Users> usersList = FXCollections.observableArrayList();
 
+    /**
+     * Cancel button action.
+     *
+     * @param actionEvent Cancel button action.
+     * @throws IOException from FXMLLoader.
+     */
     @FXML void cancelButtonClicked(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/View/Appointments.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
@@ -66,7 +78,12 @@ public class EditAppointmentController implements Initializable {
         stage.show();
     }
 
-    @FXML void saveButtonClicked(ActionEvent actionEvent) throws IOException {
+    /**
+     * Saves the info provided on the edit appointment form.
+     *
+     * @param actionEvent Save button action.
+     */
+    @FXML void saveButtonClicked(ActionEvent actionEvent) {
 
         try {
             int id = selectedAppointment.getAppointmentID();
@@ -128,12 +145,22 @@ public class EditAppointmentController implements Initializable {
         }
     }
 
+    /**
+     * Creates object for start date and time.
+     *
+     * @return start date and time.
+     */
     private LocalDateTime getStartInfo() {
         LocalDate startDate = startDatePicker.getValue();
         LocalTime startTime = startTimeComboBox.getValue();
         return LocalDateTime.of(startDate, startTime);
     }
 
+    /**
+     * Creates object for end date and time.
+     *
+     * @return end date and time.
+     */
     private LocalDateTime getEndInfo() {
         LocalDate endDate = endDatePicker.getValue();
         LocalTime endTime = endTimeComboBox.getValue();
@@ -141,6 +168,12 @@ public class EditAppointmentController implements Initializable {
     }
 
 
+    /**
+     * Initializes the controller.
+     *
+     * @param url The location used to resolve relative paths for the root object.
+     * @param resourceBundle The resources used to localize the root object.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         selectedAppointment = AppointmentsController.getSelectedAppointment();

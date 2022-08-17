@@ -1,18 +1,22 @@
 package DAO_DBAccess;
 
-import Model.Customers;
 import Model.Users;
 import Utilities.DBConnection;
-import Utilities.LoginLog;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
 
+/**
+ * DAO class that accesses the database User table.
+ */
 public class UsersDAO {
 
-
-
+    /**
+     * Gets all users from database.
+     *
+     * @return all users.
+     */
     public static ObservableList<Users> getAllUsers() {
 
         ObservableList<Users> usersList = FXCollections.observableArrayList();
@@ -36,7 +40,14 @@ public class UsersDAO {
         return usersList;
     }
 
-    public static Users checkForUser(String username, String password) throws SQLException {
+    /**
+     * Gets users from database with matching username and password.
+     *
+     * @param username the username.
+     * @param password the password.
+     * @return matching user.
+     */
+    public static Users checkForUser(String username, String password) {
 
         try {
             String sql = "SELECT * FROM users WHERE User_Name = ? AND Password = ?";
@@ -61,6 +72,13 @@ public class UsersDAO {
         return null;
     }
 
+    /**
+     * Gets user from database with matching userID.
+     *
+     * @param theUserID the user ID.
+     * @return the matching user.
+     * @throws SQLException from DBConnection.
+     */
     public static Users getUserByID(int theUserID) throws SQLException {
 
         Users users = new Users();

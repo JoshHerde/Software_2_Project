@@ -32,6 +32,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
 
+/**
+ * The AddAppointment FXML Controller class.
+ */
 public class AddAppointmentController implements Initializable {
 
     @FXML private TextField apptTitleTextField;
@@ -46,15 +49,17 @@ public class AddAppointmentController implements Initializable {
     @FXML private ComboBox<Customers> customerIDComboBox;
     @FXML private ComboBox<Users> userIDComboBox;
 
-    public static Customers selectedCustomer;
-    public static Appointments selectedAppointment;
-
 
     private ObservableList<Contacts> contactList = FXCollections.observableArrayList();
     private ObservableList<Customers> customersList = FXCollections.observableArrayList();
     private ObservableList<Users> usersList = FXCollections.observableArrayList();
 
 
+    /**
+     * Saves the info provided on the add appointment form.
+     *
+     * @param actionEvent Save button action.
+     */
     @FXML void saveButtonClicked(ActionEvent actionEvent) {
 
         try {
@@ -81,7 +86,6 @@ public class AddAppointmentController implements Initializable {
 
             LocalDateTime startTime = getStartInfo();
             LocalDateTime endTime = getEndInfo();
-
 
             Contacts contacts = contactComboBox.getValue();
             Customers customers = customerIDComboBox.getValue();
@@ -117,17 +121,20 @@ public class AddAppointmentController implements Initializable {
                 Parent root = FXMLLoader.load(getClass().getResource("/view/Appointments.fxml"));
                 Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
-                System.out.println("root = " + root + " stage = " + stage + " scene = " + scene);
                 stage.setScene(scene);
                 stage.show();
             }
-
         }
         catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Creates object for start date and time.
+     *
+     * @return start date and time.
+     */
     private LocalDateTime getStartInfo() {
         LocalDate startDate = startDatePicker.getValue();
         LocalTime startTime = startTimeComboBox.getValue();
@@ -136,6 +143,11 @@ public class AddAppointmentController implements Initializable {
         return startDateTime;
     }
 
+    /**
+     * Creates object for end date and time.
+     *
+     * @return end date and time.
+     */
     private LocalDateTime getEndInfo() {
         LocalDate endDate = endDatePicker.getValue();
         LocalTime endTime = endTimeComboBox.getValue();
@@ -145,16 +157,26 @@ public class AddAppointmentController implements Initializable {
     }
 
 
+    /**
+     * Cancel button action.
+     *
+     * @param actionEvent Cancel button action.
+     * @throws IOException from FXMLLoader.
+     */
     @FXML void cancelButtonClicked(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/Appointments.fxml"));
         Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-
-
     }
 
+    /**
+     * Initializes the controller.
+     *
+     * @param url The location used to resolve relative paths for the root object.
+     * @param resourceBundle The resources used to localize the root object.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -175,6 +197,5 @@ public class AddAppointmentController implements Initializable {
         catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 }

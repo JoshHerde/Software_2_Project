@@ -1,13 +1,9 @@
 package Controller;
 
 import DAO_DBAccess.AppointmentsDAO;
-import Model.Appointments;
 import Model.TypeMonthReport;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,14 +14,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.Month;
 import java.util.ResourceBundle;
 
+/**
+ * The TypeMonthReport FXML Controller class.
+ */
 public class TypeMonthReportController  implements Initializable {
 
     @FXML private TableView<TypeMonthReport> typeMonthTable;
@@ -34,6 +31,12 @@ public class TypeMonthReportController  implements Initializable {
     @FXML private TableColumn<TypeMonthReport, Integer> totalCol;
 
 
+    /**
+     * Back button action.
+     *
+     * @param actionEvent Back button action.
+     * @throws IOException from FXMLLoader.
+     */
     @FXML void backButtonClicked(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/View/Reports.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -42,6 +45,13 @@ public class TypeMonthReportController  implements Initializable {
         stage.show();
     }
 
+    /**
+     * Initializes the controller.
+     * Lambda expression used to set values in the table.
+     *
+     * @param url The location used to resolve relative paths for the root object.
+     * @param resourceBundle The resources used to localize the root object.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<TypeMonthReport> typeMonthAppointments = AppointmentsDAO.getByTypeMonth();
@@ -63,6 +73,5 @@ public class TypeMonthReportController  implements Initializable {
         else {
             typeMonthTable.setItems(typeMonthAppointments);
         }
-
     }
 }

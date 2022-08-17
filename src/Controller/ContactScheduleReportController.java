@@ -25,9 +25,10 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/**
+ * The ContactScheduleReport FXML Controller class.
+ */
 public class ContactScheduleReportController implements Initializable {
-
-
 
     @FXML private TableView<Appointments> contactTable;
     @FXML private TableColumn<Appointments, Integer> IdColumn;
@@ -40,7 +41,12 @@ public class ContactScheduleReportController implements Initializable {
     @FXML private ComboBox<Contacts> contactComboBox;
 
 
-
+    /**
+     * Back button action.
+     *
+     * @param actionEvent Back button action.
+     * @throws IOException from FXMLLoader.
+     */
     @FXML void backButtonClicked(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/View/Reports.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
@@ -49,6 +55,12 @@ public class ContactScheduleReportController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Contact combo box action.
+     *
+     * @param actionEvent combo box action.
+     * @throws SQLException from DAO class.
+     */
     @FXML void contactComboClicked(ActionEvent actionEvent) throws SQLException {
         Contacts selectedContact = (Contacts) contactComboBox.getSelectionModel().getSelectedItem();
         ObservableList<Appointments> contactAppointments = AppointmentsDAO.getAllByContact(selectedContact.getContactID());
@@ -76,6 +88,12 @@ public class ContactScheduleReportController implements Initializable {
     }
 
 
+    /**
+     * Initializes the controller.
+     *
+     * @param url The location used to resolve relative paths for the root object.
+     * @param resourceBundle The resources used to localize the root object.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

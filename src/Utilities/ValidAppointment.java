@@ -8,8 +8,17 @@ import javafx.scene.control.Alert;
 import java.sql.SQLException;
 import java.time.*;
 
+/**
+ * Class that validates appointments.
+ */
 public class ValidAppointment {
 
+    /**
+     * Checks for empty text fields on add or edit appointment screen.
+     *
+     * @param appointments the appointment.
+     * @return boolean true or false.
+     */
     public static boolean missingFields(Appointments appointments) {
         boolean emptyFields = false;
 
@@ -35,6 +44,13 @@ public class ValidAppointment {
         return emptyFields;
     }
 
+    /**
+     * Checks for overlapping appointment times.
+     *
+     * @param newAppointment the new appointment.
+     * @return boolean true or false.
+     * @throws SQLException from DAO class.
+     */
     public static boolean Overlapping(Appointments newAppointment) throws SQLException {
         ObservableList<Appointments> allAppointmentList = AppointmentsDAO.getAllAppointments();
         boolean overlapping = false;
@@ -79,6 +95,12 @@ public class ValidAppointment {
         return overlapping;
     }
 
+    /**
+     * Checks if appointment start time is after the end time.
+     *
+     * @param appointments the appointment
+     * @return boolean true or false.
+     */
     public static boolean startAfterEnd(Appointments appointments) {
         boolean startAfterEnd = false;
         LocalDateTime startTime = appointments.getStartTime();
@@ -97,6 +119,12 @@ public class ValidAppointment {
         return startAfterEnd;
     }
 
+    /**
+     * Checks if appointment is within the organizations hours.
+     *
+     * @param appointments the appointment.
+     * @return boolean true or false.
+     */
     public static boolean orgHours (Appointments appointments) {
 
         LocalDateTime startDateTime = appointments.getStartTime();
@@ -104,19 +132,19 @@ public class ValidAppointment {
         ZonedDateTime startTimeZone = startDateTime.atZone(ZoneId.systemDefault());
         ZonedDateTime startTimeEST = startTimeZone.withZoneSameInstant(ZoneId.of("America/New_York"));
 
-        LocalTime businessOpen = LocalTime.parse("08:00:00");
-        LocalDateTime businessStartDateTime = LocalDateTime.of(startDate, businessOpen);
-        ZonedDateTime businessStartTimeZone = businessStartDateTime.atZone(ZoneId.of("America/New_York"));
+        LocalTime orgOpenTime = LocalTime.parse("08:00:00");
+        LocalDateTime orgStartDateTime = LocalDateTime.of(startDate, orgOpenTime);
+        ZonedDateTime orgStartTimeZone = orgStartDateTime.atZone(ZoneId.of("America/New_York"));
 
         LocalDateTime endDateTime = appointments.getEndTime();
         ZonedDateTime endTimeZone = endDateTime.atZone(ZoneId.systemDefault());
         ZonedDateTime endTimeEST = endTimeZone.withZoneSameInstant(ZoneId.of("America/New_York"));
 
-        LocalTime businessClosed = LocalTime.parse("22:00:00");
-        LocalDateTime businessEndDateTime = LocalDateTime.of(startDate, businessClosed);
-        ZonedDateTime businessEndTimeZone = businessEndDateTime.atZone(ZoneId.of("America/New_York"));
+        LocalTime orgCloseTime = LocalTime.parse("22:00:00");
+        LocalDateTime orgEndDateTime = LocalDateTime.of(startDate, orgCloseTime);
+        ZonedDateTime orgEndTimeZone = orgEndDateTime.atZone(ZoneId.of("America/New_York"));
 
-        boolean orgClosed = startTimeEST.isBefore(businessStartTimeZone) || endTimeEST.isAfter(businessEndTimeZone);
+        boolean orgClosed = startTimeEST.isBefore(orgStartTimeZone) || endTimeEST.isAfter(orgEndTimeZone);
 
         if (orgClosed) {
             Alert alert = new Alert(Alert.AlertType.ERROR);

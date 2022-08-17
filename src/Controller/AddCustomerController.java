@@ -25,6 +25,9 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/**
+ * The AddCustomer FXML Controller class.
+ */
 public class AddCustomerController implements Initializable {
 
     @FXML private TextField nameTextField;
@@ -34,9 +37,13 @@ public class AddCustomerController implements Initializable {
     @FXML private  ComboBox<Countries> countryComboBox;
     @FXML private  ComboBox<Divisions> divisionComboBox;
 
-
     private ObservableList<Countries> countryList = FXCollections.observableArrayList();
 
+    /**
+     * Saves the info provided on the add customer form.
+     *
+     * @param actionEvent Save button action.
+     */
     @FXML void saveButtonClicked(ActionEvent actionEvent) {
         try {
             String name = nameTextField.getText();
@@ -80,6 +87,12 @@ public class AddCustomerController implements Initializable {
 
     }
 
+    /**
+     * Cancel button action.
+     *
+     * @param actionEvent Cancel button action.
+     * @throws IOException from FXMLLoader.
+     */
     @FXML void cancelButtonClicked(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/Customers.fxml"));
         Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
@@ -88,6 +101,12 @@ public class AddCustomerController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Country combo box action.
+     * Lambda expression used to set values in country and division combo boxes.
+     *
+     * @param actionEvent Combo box action.
+     */
     public void countryComboBoxClicked(ActionEvent actionEvent) {
         try {
             Countries selectedCountry = countryComboBox.getSelectionModel().getSelectedItem();
@@ -107,28 +126,13 @@ public class AddCustomerController implements Initializable {
             e.printStackTrace();
         }
     }
-/*
-    public boolean customerValid() {
-        if (nameTextField.getText().isEmpty() || addressTextField.getText().isEmpty() || postalCodeTextField.getText().isEmpty() || phoneTextField.getText().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Empty Text Fields");
-            alert.setHeaderText("Please fill in all text fields.");
-            alert.showAndWait();
-            return false;
-        }
-        if (countryComboBox.getSelectionModel().isEmpty() || divisionComboBox.getSelectionModel().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Empty Combo Box");
-            alert.setHeaderText("Please select Country and Division.");
-            alert.showAndWait();
-            return false;
-        }
-        return true;
-    }
 
- */
-
-
+    /**
+     * Initializes the controller.
+     *
+     * @param url The location used to resolve relative paths for the root object.
+     * @param resourceBundle The resources used to localize the root object.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         countryList = CountriesDAO.getAllCountries();

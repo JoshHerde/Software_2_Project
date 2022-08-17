@@ -21,9 +21,10 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * The Customers FXML Controller class.
+ */
 public class CustomersController implements Initializable {
-
-
 
     @FXML private TableView<Customers> customersTable;
     @FXML private TableColumn<Customers, Integer> customerIDCol;
@@ -33,15 +34,22 @@ public class CustomersController implements Initializable {
     @FXML private TableColumn<Customers, String> customerPhoneCol;
     @FXML private TableColumn<Customers, String> customerCountryCol;
     @FXML private TableColumn<Customers, Integer> customerDivisionCol;
-    @FXML private TextField searchTextField;
 
+    /**
+     * The customer selected to modify.
+     */
     public static Customers selectedCustomer;
 
     public static Customers getSelectedCustomer() {
         return selectedCustomer;
     }
 
-
+    /**
+     * Loads AddCustomerController.
+     *
+     * @param actionEvent Add new customer button action.
+     * @throws IOException from FXMLLoader.
+     */
     @FXML  void newCustomerClicked(ActionEvent actionEvent) throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("/View/AddCustomer.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
@@ -50,6 +58,12 @@ public class CustomersController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Loads EditCustomerController.
+     *
+     * @param actionEvent Edit customer button action.
+     * @throws IOException from FXMLLoader.
+     */
     @FXML  void editCustomerClicked(ActionEvent actionEvent) throws IOException {
         selectedCustomer = customersTable.getSelectionModel().getSelectedItem();
 
@@ -68,6 +82,11 @@ public class CustomersController implements Initializable {
         }
     }
 
+    /**
+     * Deletes selected customer from table.
+     *
+     * @param actionEvent delete customer button action.
+     */
     @FXML void deleteCustomerClicked(ActionEvent actionEvent) {
         selectedCustomer = customersTable.getSelectionModel().getSelectedItem();
 
@@ -109,6 +128,12 @@ public class CustomersController implements Initializable {
 
     }
 
+    /**
+     * Back button action.
+     *
+     * @param actionEvent Back button action.
+     * @throws IOException from FXMLLoader.
+     */
     @FXML void backButtonClicked(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/View/Appointments.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
@@ -118,6 +143,12 @@ public class CustomersController implements Initializable {
     }
 
 
+    /**
+     * Initializes the controller.
+     *
+     * @param url The location used to resolve relative paths for the root object.
+     * @param resourceBundle The resources used to localize the root object.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         customersTable.setItems(CustomersDAO.getAllCustomers());

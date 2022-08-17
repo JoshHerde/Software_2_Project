@@ -9,8 +9,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * DAO class that accesses the database Country table.
+ */
 public class CountriesDAO {
 
+    /**
+     * Gets all countries from database.
+     *
+     * @return all countries.
+     */
     public static ObservableList<Countries> getAllCountries() {
 
         ObservableList<Countries> countryList = FXCollections.observableArrayList();
@@ -34,6 +42,12 @@ public class CountriesDAO {
         return countryList;
     }
 
+    /**
+     * Gets a specific country with matching countryID.
+     *
+     * @param dbCountryID the country ID.
+     * @return matching country.
+     */
     public static Countries getByID(int dbCountryID) {
 
         try {

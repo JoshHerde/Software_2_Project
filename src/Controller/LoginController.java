@@ -26,6 +26,9 @@ import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+/**
+ * The Login FXML Controller class.
+ */
 public class LoginController implements Initializable {
 
     @FXML private Label headerLabel;
@@ -36,8 +39,14 @@ public class LoginController implements Initializable {
     @FXML private Button loginButton;
     @FXML private Label errorMessageLabel;
 
+    /**
+     * Sets the date and time format.
+     */
     public static final DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
 
+    /**
+     * Gets the current user.
+     */
     private static Users currentUser;
 
     public static Users getCurrentUser() {
@@ -45,6 +54,13 @@ public class LoginController implements Initializable {
     }
 
 
+    /**
+     * Login button action.
+     *
+     * @param actionEvent login button action.
+     * @throws IOException from FXMLLoader.
+     * @throws SQLException from DAO class.
+     */
     @FXML void loginButtonClicked(ActionEvent actionEvent) throws IOException, SQLException {
         String username = usernameTextField.getText();
         String password = passwordTextField.getText();
@@ -74,6 +90,11 @@ public class LoginController implements Initializable {
         }
     }
 
+    /**
+     * Checks to see if any upcoming appointments for current user.
+     *
+     * @throws SQLException from DAO class.
+     */
     private void upcomingAppointment() throws SQLException {
         try {
             boolean upcomingAppointment = false;
@@ -106,6 +127,12 @@ public class LoginController implements Initializable {
         }
     }
 
+    /**
+     * Initializes the controller.
+     *
+     * @param url The location used to resolve relative paths for the root object.
+     * @param rb The resources used to localize the root object.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         userZoneId.setText(ZoneId.systemDefault().toString());

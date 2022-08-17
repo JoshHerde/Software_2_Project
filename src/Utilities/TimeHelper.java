@@ -8,7 +8,9 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
+
 public class TimeHelper {
+
     private static ObservableList<LocalTime> startTimes = FXCollections.observableArrayList();
     private static ObservableList<LocalTime> endTimes = FXCollections.observableArrayList();
 

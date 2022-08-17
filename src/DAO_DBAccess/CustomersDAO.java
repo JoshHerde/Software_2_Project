@@ -10,9 +10,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
+/**
+ * DAO class that accesses the database Customer table.
+ */
 public class CustomersDAO {
 
+    /**
+     * Gets all customers from database.
+     *
+     * @return all customers.
+     */
     public static ObservableList<Customers> getAllCustomers() {
 
         ObservableList<Customers> customersList = FXCollections.observableArrayList();
@@ -46,6 +53,12 @@ public class CustomersDAO {
     }
 
 
+    /**
+     * Adds a customer to the database.
+     *
+     * @param customer the customer to be added.
+     * @throws SQLException from DBConnection.
+     */
     public static void addCustomer(Customers customer) throws SQLException {
         try {
 
@@ -66,6 +79,12 @@ public class CustomersDAO {
         }
     }
 
+    /**
+     * Edits an existing customer in the database.
+     *
+     * @param customer the customer to be edited.
+     * @throws SQLException from DBConnection.
+     */
     public static void editCustomer(Customers customer) throws SQLException {
         String sql = "UPDATE customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Division_ID = ? WHERE Customer_ID = ?";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
@@ -81,6 +100,11 @@ public class CustomersDAO {
 
     }
 
+    /**
+     * Deleted and existing customer from the database.
+     *
+     * @param dbCustomerID  the customer to be deleted.
+     */
     public static void deleteCustomer(int dbCustomerID) {
         try {
             String sql = "DELETE FROM customers WHERE Customer_ID = ?";
@@ -94,6 +118,12 @@ public class CustomersDAO {
         }
     }
 
+    /**
+     * Gets a specific customer with matching customerID.
+     * @param theCustomerID the customer ID.
+     * @return the specific customer with matching ID.
+     * @throws SQLException from DBConnection.
+     */
     public static Customers getCustomerByID(int theCustomerID) throws SQLException {
 
         Customers customers = new Customers();

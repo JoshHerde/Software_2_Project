@@ -1,7 +1,7 @@
 package Model;
 
 /**
- * Class used to make the Appointment object.
+ * Class used to make the Users object.
  */
 public class Users {
 

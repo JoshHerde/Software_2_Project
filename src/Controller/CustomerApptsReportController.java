@@ -1,11 +1,8 @@
 package Controller;
 
 import DAO_DBAccess.AppointmentsDAO;
-import DAO_DBAccess.CountriesDAO;
 import DAO_DBAccess.CustomersDAO;
 import Model.*;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,6 +23,9 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/**
+ * The CustomerApptsReport FXML Controller class.
+ */
 public class CustomerApptsReportController implements Initializable {
 
 
@@ -41,6 +41,12 @@ public class CustomerApptsReportController implements Initializable {
 
 
 
+    /**
+     * Back button action.
+     *
+     * @param actionEvent Back button action.
+     * @throws IOException from FXMLLoader.
+     */
     @FXML void backButtonClicked(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/View/Reports.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
@@ -49,6 +55,12 @@ public class CustomerApptsReportController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Contact combo box action.
+     *
+     * @param actionEvent combo box action.
+     * @throws SQLException from DAO class.
+     */
     @FXML void customerComboClicked(ActionEvent actionEvent) throws SQLException {
 
         Customers selectedCustomer = (Customers) customerComboBox.getSelectionModel().getSelectedItem();
@@ -75,6 +87,12 @@ public class CustomerApptsReportController implements Initializable {
         }
     }
 
+    /**
+     * Initializes the controller.
+     *
+     * @param url The location used to resolve relative paths for the root object.
+     * @param resourceBundle The resources used to localize the root object.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

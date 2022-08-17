@@ -2,7 +2,6 @@ package Utilities;
 
 
 import Controller.LoginController;
-import DAO_DBAccess.UsersDAO;
 import Model.Users;
 
 import java.io.FileWriter;
@@ -13,21 +12,30 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Class that creates a log of all attempted logins.
+ */
 public class LoginLog {
 
     static Users currentUser;
     static ZoneId utcID = ZoneId.of("UTC");
-    //static DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("On 'MM-dd-yyyy' at 'HH:mm' , ");
+    //static DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("On " + "MM/dd/yyyy" + " at " + "hh:mm:ssa z" + ", ");
 
 
-    public LoginLog() {
-    }
+    //public LoginLog() {}
 
+    /**
+     * Keeps track of login attempts.
+     *
+     * @param username the username.
+     * @param successful if login was successful or not.
+     */
     public static void inputLog(String username, boolean successful) {
 
         LocalDateTime nowUTC = LocalDateTime.now(utcID);
         ZonedDateTime zoneUTC = nowUTC.atZone(utcID);
-        String dateTime = zoneUTC.toString() + " " + username;
+        //String dateTime = timeFormat.format(zoneUTC);
+        String dateTime = "On this date and time: " + zoneUTC.toLocalDateTime() + ", Username: " + username + " - ";
 
 
         try {
@@ -41,6 +49,7 @@ public class LoginLog {
                 dateTime += " was denied access";
             }
             pw.println(dateTime);
+            System.out.println(dateTime);
         }
         catch (IOException e) {
             System.out.println(e.getMessage());

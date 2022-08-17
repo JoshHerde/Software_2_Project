@@ -26,6 +26,9 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/**
+ * The EditCustomer FXML Controller class.
+ */
 public class EditCustomerController implements Initializable {
 
     @FXML private TextField customerIDTextField;
@@ -36,13 +39,16 @@ public class EditCustomerController implements Initializable {
     @FXML private  ComboBox<Countries> countryComboBox;
     @FXML private  ComboBox<Divisions> divisionComboBox;
 
+
     private ObservableList<Countries> countryList = FXCollections.observableArrayList();
     private Users currentUser = LoginController.getCurrentUser();
     private Customers selectedCustomer;
 
-
-
-
+    /**
+     * Saves the info provided on the edit customer form.
+     *
+     * @param actionEvent Save button action.
+     */
     @FXML void saveButtonClicked(ActionEvent actionEvent) {
         try {
             String name = nameTextField.getText();
@@ -77,6 +83,12 @@ public class EditCustomerController implements Initializable {
         }
     }
 
+    /**
+     * Cancel button action.
+     *
+     * @param actionEvent Cancel button action.
+     * @throws IOException from FXMLLoader.
+     */
     @FXML void cancelButtonClicked(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/View/Customers.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
@@ -85,26 +97,38 @@ public class EditCustomerController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Country combo box action.
+     * Lambda expression used to set values in country and division combo boxes.
+     *
+     * @param actionEvent combo box action.
+     */
     @FXML void countryComboBoxClicked(ActionEvent actionEvent) {
         try {
             Countries selectedCountry = countryComboBox.getSelectionModel().getSelectedItem();
             ObservableList<Divisions> databaseDivisions = DivisionsDAO.getAllDivisions();
             ObservableList<Divisions> countryDivisions = FXCollections.observableArrayList();
 
-            for (Divisions divisions : databaseDivisions) {
+            //for (Divisions divisions : databaseDivisions) {
+            databaseDivisions.forEach( divisions -> {
                 if (divisions.getCountryID() == selectedCountry.getCountryID()) {
                     countryDivisions.add(divisions);
                 }
-            }
+            });
             divisionComboBox.setItems(countryDivisions);
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
 
+    /**
+     * Initializes the controller.
+     *
+     * @param url The location used to resolve relative paths for the root object.
+     * @param resourceBundle The resources used to localize the root object.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         selectedCustomer = CustomersController.getSelectedCustomer();
